@@ -1,0 +1,2432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sharper ONE™ | Every LiFE™ Has a ONE™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ════════════════════════════════════════════
+   DESIGN TOKENS
+════════════════════════════════════════════ */
+:root {
+  --purple:         #3C2469;
+  --purple-deep:    #1a0f3d;
+  --purple-mid:     #261550;
+  --purple-lift:    #4a2e80;
+  --blue-deep:      #080f2c;
+  --blue-mid:       #0e1d45;
+  --blue-soft:      #183368;
+  --orange:         #ff5500;
+  --orange-soft:    #ff7733;
+  --white:          #ffffff;
+  --off-white:      #f0ece8;
+  --dark:           #050410;
+  --dark-mid:       #09071a;
+  --dark-panel:     #070614;
+  --ink:            #100e20;
+  --muted:          rgba(240,236,232,0.48);
+  --muted-strong:   rgba(240,236,232,0.75);
+  --line:           rgba(255,255,255,0.06);
+  --line-warm:      rgba(255,85,0,0.15);
+  --line-cool:      rgba(122,173,255,0.1);
+  --blue-hint:      #7aadff;
+
+  /* Gradient-text stops — atmosphere baked into the letters */
+  --grad-orange: linear-gradient(135deg, #ff5500 0%, #c43a8f 40%, #7a4fff 80%, #4a8fff 100%);
+  --grad-blue:   linear-gradient(135deg, #7aadff 0%, #9b7aff 60%, #ff5500 100%);
+  --grad-white:  linear-gradient(135deg, #ffffff 0%, #c8b8f0 50%, #7aadff 100%);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--dark);
+  color: var(--off-white);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  padding-bottom: 72px; /* clearance for sticky commerce bar */
+}
+
+/* Film grain */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999; opacity: 0.28; mix-blend-mode: overlay;
+}
+
+/* ════════════════════════════════════════════
+   GRADIENT TEXT UTILITY
+════════════════════════════════════════════ */
+.gtext-orange {
+  background: var(--grad-orange);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gtext-blue {
+  background: var(--grad-blue);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gtext-white {
+  background: var(--grad-white);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ════════════════════════════════════════════
+   TRADEMARK SUPERSCRIPT — first-use styled
+════════════════════════════════════════════ */
+.tm {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.38em;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--orange);
+  vertical-align: super;
+  line-height: 0;
+  -webkit-text-fill-color: var(--orange);
+}
+/* When inside gradient text, override fill */
+.gtext-orange .tm,
+.gtext-blue .tm,
+.gtext-white .tm {
+  -webkit-text-fill-color: rgba(255,85,0,0.7);
+}
+
+/* ════════════════════════════════════════════
+   GHOST WATERMARK — per section
+════════════════════════════════════════════ */
+.ghost {
+  position: absolute;
+  font-family: 'Bebas Neue', sans-serif;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  z-index: 0;
+}
+
+/* ════════════════════════════════════════════
+   NAV
+════════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+  height: 60px; padding: 0 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(5,4,16,0.9);
+  backdrop-filter: blur(18px) saturate(1.8);
+  border-bottom: 1px solid var(--line);
+}
+.nav-left {
+  display: flex; align-items: center; gap: 13px; text-decoration: none;
+}
+.nav-orb {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: radial-gradient(circle at 36% 36%, var(--purple-lift), var(--purple-deep));
+  border: 1.5px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif; font-size: 14px; color: var(--white);
+  box-shadow: 0 0 18px rgba(60,36,105,0.5), inset 0 1px 0 rgba(255,255,255,0.07);
+  flex-shrink: 0;
+}
+.nav-wordmark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--white);
+}
+.nav-wordmark .o { color: var(--orange); }
+.nav-links {
+  display: flex; align-items: center; gap: 28px; list-style: none;
+}
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(240,236,232,0.3); text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--dark); background: var(--orange);
+  padding: 9px 22px; border: none; cursor: pointer; text-decoration: none;
+  transition: background 0.2s, transform 0.15s; display: inline-block;
+}
+.nav-cta:hover { background: var(--orange-soft); transform: translateY(-1px); }
+
+/* ════════════════════════════════════════════
+   SHARED SECTION PRIMITIVES
+════════════════════════════════════════════ */
+.s-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.48em; text-transform: uppercase;
+  color: rgba(255,85,0,0.5);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
+}
+.s-eyebrow::before { content: ''; width: 22px; height: 1px; background: rgba(255,85,0,0.3); }
+
+.s-eyebrow-blue {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.48em; text-transform: uppercase;
+  color: rgba(122,173,255,0.45);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
+}
+.s-eyebrow-blue::before { content: ''; width: 22px; height: 1px; background: rgba(122,173,255,0.2); }
+
+/* Section separators */
+.sep {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(60,36,105,0.5), rgba(122,173,255,0.15), transparent);
+}
+
+/* Buttons */
+.btn-primary {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--dark); background: var(--orange);
+  padding: 18px 44px; border: none; cursor: pointer; text-decoration: none; display: inline-block;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.btn-primary:hover { background: var(--orange-soft); transform: translateY(-2px); box-shadow: 0 10px 36px rgba(255,85,0,0.28); }
+
+.btn-ghost {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--muted); background: none;
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 17px 30px; cursor: pointer; text-decoration: none; display: inline-block;
+  transition: color 0.2s, border-color 0.2s;
+}
+.btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+
+/* ════════════════════════════════════════════
+   PAGE 01 — HERO (100vh)
+   Ghost: "1" — the ONE™ orb mark
+════════════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  background: var(--purple-deep);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 100px 5% 80px;
+  position: relative; overflow: hidden;
+  gap: 60px;
+}
+#hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 65% 25%, rgba(14,29,69,0.95) 0%, transparent 52%),
+    radial-gradient(ellipse at 8% 85%,  rgba(8,15,44,0.85)  0%, transparent 48%),
+    radial-gradient(ellipse at 92% 88%, rgba(255,85,0,0.04)  0%, transparent 40%);
+  pointer-events: none;
+}
+/* Ghost: the "1" — massive, fills the right half */
+#hero .ghost {
+  font-size: clamp(340px, 52vw, 680px);
+  color: rgba(255,85,0,0.03);
+  right: -2%;
+  top: 50%;
+  transform: translateY(-52%);
+  letter-spacing: -0.04em;
+}
+
+.hero-left  { position: relative; z-index: 2; }
+.hero-right { position: relative; z-index: 2; }
+
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.44em; text-transform: uppercase;
+  color: rgba(255,85,0,0.55);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 26px;
+  animation: fadeIn 0.6s ease both;
+}
+.hero-eyebrow::before { content: ''; width: 22px; height: 1px; background: rgba(255,85,0,0.35); }
+
+.hero-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 13vw, 168px);
+  line-height: 0.84; margin-bottom: 10px;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+
+.hero-subhead {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(20px, 2.4vw, 30px); font-weight: 300; letter-spacing: 0.05em;
+  color: rgba(122,173,255,0.6); margin-bottom: 36px; line-height: 1.35;
+  animation: fadeUp 0.7s 0.22s ease both;
+}
+
+.hero-wound {
+  font-size: clamp(16px, 1.6vw, 20px);
+  color: rgba(240,236,232,0.58);
+  max-width: 460px; line-height: 1.85; margin-bottom: 48px;
+  animation: fadeUp 0.7s 0.34s ease both;
+}
+.hero-wound strong { color: var(--off-white); font-weight: 500; }
+
+.hero-ctas {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  animation: fadeUp 0.7s 0.46s ease both;
+}
+
+/* Right column — Got ONE™? */
+.hero-right-inner { animation: fadeIn 1s 0.55s ease both; }
+
+.got-one {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(60px, 9vw, 118px);
+  line-height: 0.86; margin-bottom: 16px;
+}
+
+.got-setup {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(13px, 1.4vw, 17px); font-weight: 300; letter-spacing: 0.12em;
+  color: rgba(122,173,255,0.5); margin-bottom: 40px; line-height: 1.55;
+}
+
+.personas { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+.persona {
+  display: flex; align-items: baseline; gap: 14px;
+  opacity: 0;
+  animation: slideRight 0.5s ease forwards;
+}
+.persona:nth-child(1) { animation-delay: 0.7s;  }
+.persona:nth-child(2) { animation-delay: 0.85s; }
+.persona:nth-child(3) { animation-delay: 1.0s;  }
+.persona:nth-child(4) { animation-delay: 1.15s; }
+.persona:nth-child(5) { animation-delay: 1.3s;  }
+.persona:nth-child(6) { animation-delay: 1.45s; }
+
+.persona-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--orange); opacity: 0.55; flex-shrink: 0; margin-top: 6px; }
+.persona-role {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(240,236,232,0.42); min-width: 130px; flex-shrink: 0;
+}
+.persona-cost { font-size: 14px; color: rgba(240,236,232,0.32); font-style: italic; line-height: 1.4; }
+
+.hero-anchor {
+  border-left: 2px solid rgba(255,85,0,0.4); padding-left: 18px;
+}
+.hero-anchor-main {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(255,85,0,0.55);
+}
+.hero-anchor-sub { font-size: 11px; color: rgba(240,236,232,0.22); letter-spacing: 0.06em; margin-top: 3px; }
+
+/* ════════════════════════════════════════════
+   PAGE 02 — MANIFESTO (100vh min)
+   "Every LiFE™ Has a ONE™"
+   Ghost: "ONE" — massive, ethereal
+════════════════════════════════════════════ */
+#manifesto {
+  min-height: 100vh;
+  background: var(--dark-mid);
+  display: flex; align-items: center;
+  padding: 120px 5%;
+  position: relative; overflow: hidden;
+}
+#manifesto-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 0%   45%, rgba(60,36,105,0.32)  0%, transparent 50%),
+    radial-gradient(ellipse at 100% 55%, rgba(8,15,44,0.55)    0%, transparent 50%),
+    radial-gradient(ellipse at 50%  100%, rgba(255,85,0,0.025) 0%, transparent 40%);
+  pointer-events: none;
+}
+/* Ghost: "ONE" — fills the page */
+#manifesto .ghost {
+  font-size: clamp(200px, 35vw, 500px);
+  color: rgba(122,173,255,0.025);
+  right: -3%;
+  top: 50%;
+  transform: translateY(-50%);
+  letter-spacing: -0.02em;
+}
+
+/* Horizontal blade line at midpoint */
+#manifesto::after {
+  content: '';
+  position: absolute; top: 50%; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,85,0,0.07), rgba(255,85,0,0.14), rgba(255,85,0,0.07), transparent);
+  pointer-events: none;
+}
+
+.manifesto-inner {
+  max-width: 1080px; margin: 0 auto;
+  position: relative; z-index: 2; width: 100%;
+}
+
+.manifesto-kicker {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.5em; text-transform: uppercase;
+  color: rgba(255,85,0,0.45);
+  display: flex; align-items: center; gap: 16px; margin-bottom: 44px;
+}
+.manifesto-kicker::before,
+.manifesto-kicker::after { content: ''; height: 1px; width: 36px; background: rgba(255,85,0,0.2); }
+
+/* The central truth — large, reads in two seconds */
+.manifesto-truth {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(64px, 10vw, 138px);
+  line-height: 0.87; margin-bottom: 52px;
+  max-width: 880px;
+}
+
+.one-pill {
+  display: inline-flex; align-items: stretch;
+  border: 1px solid rgba(255,85,0,0.22);
+  overflow: hidden; margin-bottom: 72px;
+}
+.one-pill-mark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--dark); background: var(--orange);
+  padding: 9px 20px; display: flex; align-items: center;
+}
+.one-pill-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(240,236,232,0.38); padding: 9px 22px; display: flex; align-items: center;
+}
+.one-pill-text em { color: rgba(240,236,232,0.72); font-style: normal; font-weight: 600; }
+
+/* Three voices grid */
+.voices {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.05);
+  margin-bottom: 64px;
+}
+.voice {
+  background: var(--dark);
+  padding: 48px 32px 56px;
+  position: relative; overflow: hidden;
+  transition: background 0.4s;
+}
+.voice:hover { background: rgba(8,15,44,0.8); }
+.voice::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  opacity: 0.5; transition: opacity 0.3s;
+}
+.voice:hover::before { opacity: 1; }
+.voice-a::before { background: linear-gradient(90deg, var(--purple-lift), var(--blue-soft)); }
+.voice-b::before { background: linear-gradient(90deg, var(--orange), rgba(255,85,0,0.2)); }
+.voice-c::before { background: linear-gradient(90deg, var(--blue-hint), rgba(122,173,255,0.15)); }
+
+.voice-lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.48em; text-transform: uppercase;
+  margin-bottom: 22px;
+  display: flex; align-items: center; gap: 10px;
+}
+.voice-lbl::after { content: ''; height: 1px; flex: 1; opacity: 0.25; }
+.voice-a .voice-lbl { color: rgba(122,173,255,0.4); }
+.voice-a .voice-lbl::after { background: rgba(122,173,255,0.5); }
+.voice-b .voice-lbl { color: rgba(255,85,0,0.5); }
+.voice-b .voice-lbl::after { background: var(--orange); }
+.voice-c .voice-lbl { color: rgba(122,173,255,0.4); }
+.voice-c .voice-lbl::after { background: rgba(122,173,255,0.5); }
+
+.voice-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(34px, 3.8vw, 48px);
+  line-height: 0.88; margin-bottom: 24px;
+}
+.voice-a .voice-title { color: var(--white); }
+.voice-b .voice-title { color: var(--orange); }
+.voice-c .voice-title { color: var(--blue-hint); }
+
+.voice-body {
+  font-size: 15px; line-height: 1.92; color: rgba(240,236,232,0.42);
+}
+.voice-body p + p { margin-top: 16px; }
+.voice-body strong { font-weight: 500; color: rgba(240,236,232,0.78); }
+.voice-body em { font-style: italic; color: rgba(240,236,232,0.58); }
+.voice-body .bm {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.08em;
+  color: rgba(255,85,0,0.48);
+}
+
+.voice-pull {
+  margin-top: 28px; padding-top: 22px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px; font-weight: 300; font-style: italic;
+  line-height: 1.6;
+}
+.voice-a .voice-pull { color: rgba(122,173,255,0.32); }
+.voice-b .voice-pull { color: rgba(255,85,0,0.32); }
+.voice-c .voice-pull { color: rgba(122,173,255,0.32); }
+
+/* Convergence */
+.convergence {
+  text-align: center; position: relative; z-index: 2;
+}
+.conv-threads {
+  display: flex; justify-content: center; gap: 88px; height: 48px; overflow: hidden; margin-bottom: 0;
+}
+.conv-line { width: 1px; height: 100%; opacity: 0.22; }
+.conv-line:nth-child(1) { background: linear-gradient(180deg, rgba(122,173,255,0.6), transparent); }
+.conv-line:nth-child(2) { background: linear-gradient(180deg, rgba(255,85,0,0.8),  transparent); }
+.conv-line:nth-child(3) { background: linear-gradient(180deg, rgba(122,173,255,0.6), transparent); }
+.conv-node {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--orange);
+  margin: 0 auto 32px;
+  box-shadow: 0 0 18px rgba(255,85,0,0.5);
+}
+.conv-truth {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(17px, 2.2vw, 26px); font-weight: 300; letter-spacing: 0.05em;
+  color: rgba(240,236,232,0.5); max-width: 680px; margin: 0 auto 12px; line-height: 1.55;
+}
+.conv-truth strong { font-weight: 600; color: var(--off-white); }
+.conv-sub { font-size: 12px; color: rgba(240,236,232,0.2); letter-spacing: 0.1em; font-style: italic; }
+
+/* ════════════════════════════════════════════
+   PAGE 03 — SiMPLE™ / iT™ DECLARATION (100vh)
+   "We don't sharpen blades."
+   Ghost: "SiMPLE" — medium scale, centered
+════════════════════════════════════════════ */
+#declaration {
+  min-height: 100vh;
+  background: var(--blue-deep);
+  display: flex; align-items: center; justify-content: center;
+  padding: 120px 5%;
+  position: relative; overflow: hidden;
+  text-align: center;
+}
+#declaration-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(26,51,104,0.6) 0%, transparent 62%),
+    radial-gradient(ellipse at 0% 0%,   rgba(60,36,105,0.28) 0%, transparent 45%),
+    radial-gradient(ellipse at 100% 100%, rgba(255,85,0,0.03) 0%, transparent 40%);
+  pointer-events: none;
+}
+#declaration .ghost {
+  font-size: clamp(120px, 22vw, 320px);
+  color: rgba(122,173,255,0.03);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  letter-spacing: 0.06em;
+}
+/* Sep lines top + bottom */
+#declaration::before,
+#declaration::after {
+  content: '';
+  position: absolute; left: 5%; right: 5%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(122,173,255,0.12), transparent);
+}
+#declaration::before { top: 0; }
+#declaration::after  { bottom: 0; }
+
+.declaration-inner {
+  max-width: 860px; position: relative; z-index: 2;
+}
+
+.decl-not {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(16px, 2vw, 22px); font-weight: 300; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(240,236,232,0.28); margin-bottom: 32px;
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+}
+.decl-not::before,
+.decl-not::after { content: ''; height: 1px; width: 48px; background: rgba(240,236,232,0.12); }
+
+.decl-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(72px, 13vw, 172px);
+  line-height: 0.84; margin-bottom: 36px;
+}
+
+.decl-method {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(16px, 2vw, 24px); font-weight: 300; letter-spacing: 0.12em;
+  color: rgba(240,236,232,0.4); margin-bottom: 56px; line-height: 1.5;
+}
+.decl-method em { color: rgba(122,173,255,0.6); font-style: normal; }
+
+/* Two definition cards */
+.decl-defs {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  margin-bottom: 56px;
+}
+.decl-def {
+  background: rgba(8,15,44,0.6);
+  border: 1px solid rgba(122,173,255,0.1);
+  padding: 32px 30px; text-align: left;
+  transition: border-color 0.3s, background 0.3s;
+}
+.decl-def:hover { border-color: rgba(122,173,255,0.25); background: rgba(26,51,104,0.3); }
+.decl-def-mark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 12px;
+}
+.decl-def h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(28px, 3vw, 40px); color: var(--white); line-height: 0.9; margin-bottom: 14px;
+}
+.decl-def h4 em { color: var(--blue-hint); font-style: normal; }
+.decl-def p { font-size: 14px; color: rgba(240,236,232,0.38); line-height: 1.7; }
+.decl-def p strong { color: rgba(240,236,232,0.7); font-weight: 500; }
+
+.decl-closer {
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: rgba(240,236,232,0.38); line-height: 1.85;
+  max-width: 580px; margin: 0 auto;
+}
+.decl-closer strong { color: rgba(240,236,232,0.68); font-weight: 500; }
+
+/* ════════════════════════════════════════════
+   PAGE 04 — THE MIRROR (tall, flexible)
+   "What it's actually costing you."
+   Ghost: audience word per card (via inline styles)
+════════════════════════════════════════════ */
+#mirror {
+  background: var(--dark-panel);
+  padding: 112px 5%;
+  position: relative; overflow: hidden;
+}
+#mirror-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 0% 50%, rgba(60,36,105,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 50%, rgba(8,15,44,0.5) 0%, transparent 50%);
+  pointer-events: none;
+}
+/* Ghost: "$10" — the price as atmosphere */
+#mirror .ghost {
+  font-size: clamp(220px, 38vw, 560px);
+  color: rgba(255,85,0,0.022);
+  right: -4%; bottom: -10%;
+  letter-spacing: -0.04em;
+}
+
+.mirror-inner { max-width: 1080px; margin: 0 auto; position: relative; z-index: 2; }
+
+.mirror-head { margin-bottom: 72px; }
+.mirror-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 8vw, 112px);
+  line-height: 0.86; margin-bottom: 0;
+}
+
+.mirror-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.mirror-card {
+  background: var(--dark); padding: 44px 32px 52px;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+}
+.mirror-card:hover { background: rgba(14,29,69,0.5); }
+.mirror-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--purple), var(--blue-soft));
+  opacity: 0; transition: opacity 0.3s;
+}
+.mirror-card:hover::before { opacity: 1; }
+
+.mirror-who {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.38em; text-transform: uppercase;
+  color: rgba(255,85,0,0.5); margin-bottom: 18px;
+}
+.mirror-loss {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 0.88; margin-bottom: 20px;
+}
+.mirror-detail {
+  font-size: 15px; color: rgba(240,236,232,0.35); line-height: 1.75;
+}
+
+/* ════════════════════════════════════════════
+   PAGE 05 — HOW IT WORKS (tall, flexible)
+   Ghost: "SIMPLE" — medium, left-side
+════════════════════════════════════════════ */
+#guide {
+  background: var(--dark-mid);
+  padding: 112px 5%;
+  position: relative; overflow: hidden;
+}
+#guide .ghost {
+  font-size: clamp(100px, 18vw, 260px);
+  color: rgba(60,36,105,0.08);
+  left: -2%; bottom: 5%;
+  letter-spacing: 0.04em;
+}
+.guide-inner { max-width: 1080px; margin: 0 auto; position: relative; z-index: 2; }
+
+.guide-top {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  align-items: center; margin-bottom: 72px;
+}
+.guide-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 8.5vw, 112px);
+  line-height: 0.86;
+}
+.guide-body p {
+  font-size: clamp(16px, 1.7vw, 20px);
+  color: rgba(240,236,232,0.55); line-height: 1.85; margin-bottom: 22px;
+}
+.guide-body p:last-child { margin-bottom: 0; }
+.guide-body strong { color: var(--off-white); font-weight: 500; }
+
+.guide-steps {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 2px; background: var(--line); border: 1px solid var(--line);
+}
+.guide-step {
+  background: var(--dark-panel); padding: 34px 26px 40px;
+  position: relative; transition: background 0.25s;
+}
+.guide-step:hover { background: rgba(60,36,105,0.15); }
+.guide-step::after {
+  content: '→';
+  position: absolute; top: 50%; right: -13px;
+  transform: translateY(-50%);
+  font-size: 13px; color: rgba(255,85,0,0.25); z-index: 2;
+}
+.guide-step:last-child::after { display: none; }
+.step-n {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 64px; line-height: 1; color: rgba(255,85,0,0.08); margin-bottom: 14px;
+}
+.guide-step h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--white); margin-bottom: 10px;
+}
+.guide-step p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+/* ════════════════════════════════════════════
+   PAGE 06 — PRICING (tall, flexible)
+   Ghost: "$10" — large, right-side
+════════════════════════════════════════════ */
+#pricing {
+  background: var(--dark-panel);
+  padding: 112px 5%;
+  position: relative; overflow: hidden;
+}
+#pricing-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 12% 50%, rgba(60,36,105,0.22) 0%, transparent 52%),
+    radial-gradient(ellipse at 88% 30%, rgba(8,15,44,0.5)    0%, transparent 50%);
+  pointer-events: none;
+}
+#pricing .ghost {
+  font-size: clamp(200px, 36vw, 520px);
+  color: rgba(255,85,0,0.028);
+  right: -5%; top: 50%;
+  transform: translateY(-50%);
+  letter-spacing: -0.04em;
+}
+.pricing-inner { max-width: 1080px; margin: 0 auto; position: relative; z-index: 2; }
+.pricing-top {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  align-items: start; margin-bottom: 56px;
+}
+.pricing-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 8vw, 108px); line-height: 0.86;
+}
+.pricing-philo {
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: rgba(240,236,232,0.48); line-height: 1.85;
+}
+.pricing-philo strong { color: var(--off-white); font-weight: 500; }
+
+/* Price table */
+.price-list { border: 1px solid rgba(255,255,255,0.06); margin-bottom: 28px; }
+.price-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 28px; border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.2s;
+}
+.price-row:last-child { border-bottom: none; }
+.price-row:hover { background: rgba(60,36,105,0.1); }
+.price-row-left h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--white); margin-bottom: 3px;
+}
+.price-row-left p { font-size: 12px; color: var(--muted); }
+.price-amt {
+  font-family: 'Bebas Neue', sans-serif; font-size: 30px;
+  color: var(--orange); white-space: nowrap; margin-left: 24px;
+}
+
+/* BiP™ card */
+.bip-card {
+  border: 1px solid rgba(122,173,255,0.1);
+  background: rgba(8,15,44,0.5);
+  padding: 32px 36px;
+  display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: start;
+}
+.bip-icon {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 50px; line-height: 1; color: rgba(122,173,255,0.2);
+}
+.bip-text h5 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(122,173,255,0.6); margin-bottom: 10px;
+}
+.bip-text p { font-size: 14px; color: rgba(240,236,232,0.35); line-height: 1.75; }
+.bip-text p strong { color: rgba(240,236,232,0.68); font-weight: 500; }
+.bip-text p em { color: rgba(122,173,255,0.55); font-style: normal; }
+
+/* ════════════════════════════════════════════
+   PAGE 07 — GRAND OPENING OFFER (tall, flex)
+   Ghost: "3" — medium, left
+════════════════════════════════════════════ */
+#offer {
+  background: var(--dark);
+  padding: 112px 5%;
+  position: relative; overflow: hidden;
+}
+#offer::after {
+  content: '';
+  position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--orange), rgba(255,85,0,0));
+}
+#offer-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 18% 50%, rgba(60,36,105,0.28) 0%, transparent 52%),
+    radial-gradient(ellipse at 82% 50%, rgba(255,85,0,0.04)  0%, transparent 50%);
+  pointer-events: none;
+}
+#offer .ghost {
+  font-size: clamp(280px, 46vw, 640px);
+  color: rgba(255,85,0,0.025);
+  left: -4%; top: 50%;
+  transform: translateY(-54%);
+  letter-spacing: -0.04em;
+}
+.offer-inner {
+  max-width: 1080px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  position: relative; z-index: 2;
+}
+.offer-left h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(60px, 9vw, 116px); line-height: 0.84; margin-bottom: 28px;
+}
+.offer-left p {
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: rgba(240,236,232,0.55); line-height: 1.82; margin-bottom: 16px; max-width: 400px;
+}
+.offer-left p strong { color: var(--off-white); font-weight: 500; }
+.offer-fine { font-size: 12px; color: rgba(240,236,232,0.22); font-style: italic; line-height: 1.65; margin-top: 20px; max-width: 360px; }
+
+.offer-card {
+  border: 1px solid rgba(255,85,0,0.22);
+  background: rgba(255,85,0,0.04);
+  padding: 52px 48px; position: relative; overflow: hidden;
+}
+.offer-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--orange);
+}
+.offer-card-lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.4em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 10px;
+}
+.offer-card-lbl::after { content: ''; height: 1px; width: 28px; background: var(--orange); opacity: 0.3; }
+.offer-deal {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(60px, 8vw, 96px); line-height: 0.82; margin-bottom: 8px;
+}
+.offer-deal em { color: var(--orange); font-style: normal; }
+.offer-deal-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(240,236,232,0.35); margin-bottom: 34px;
+}
+.offer-rule { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 0 0 26px; }
+.offer-rows { display: flex; flex-direction: column; gap: 16px; margin-bottom: 26px; }
+.offer-row { display: flex; justify-content: space-between; align-items: center; }
+.offer-item { font-size: 14px; color: rgba(240,236,232,0.4); }
+.offer-paid {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 800;
+  letter-spacing: 0.08em; color: var(--off-white);
+}
+.offer-free {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 800;
+  letter-spacing: 0.18em; color: var(--orange);
+}
+.offer-badge {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(240,236,232,0.25);
+  border-top: 1px solid rgba(255,255,255,0.06); padding-top: 22px;
+}
+.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: pulsedot 2.2s ease infinite; }
+@keyframes pulsedot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.45;transform:scale(0.7)} }
+
+/* ════════════════════════════════════════════
+   PAGE 08 — iQ™ SEED (100vh)
+   "Your blade, remembered."
+   Ghost: "iQ" — subtle, right
+════════════════════════════════════════════ */
+#iq {
+  min-height: 100vh;
+  background: var(--blue-deep);
+  display: flex; align-items: center;
+  padding: 120px 5%;
+  position: relative; overflow: hidden;
+}
+#iq-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(24,51,104,0.55) 0%, transparent 62%),
+    radial-gradient(ellipse at 0% 0%,   rgba(60,36,105,0.25) 0%, transparent 45%);
+  pointer-events: none;
+}
+#iq .ghost {
+  font-size: clamp(180px, 30vw, 440px);
+  color: rgba(122,173,255,0.03);
+  right: -2%; top: 50%;
+  transform: translateY(-50%);
+  letter-spacing: -0.02em;
+}
+.iq-inner {
+  max-width: 1080px; margin: 0 auto; width: 100%; position: relative; z-index: 2;
+  text-align: center;
+}
+.iq-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(64px, 10.5vw, 140px); line-height: 0.86; margin-bottom: 20px;
+}
+.iq-sub {
+  font-size: clamp(16px, 1.8vw, 22px);
+  color: rgba(240,236,232,0.45); line-height: 1.85; max-width: 620px; margin: 0 auto 64px;
+}
+.iq-sub strong { color: rgba(240,236,232,0.78); font-weight: 500; }
+
+.iq-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 52px;
+}
+.iq-card {
+  background: rgba(8,15,44,0.7);
+  border: 1px solid rgba(122,173,255,0.09);
+  padding: 36px 28px; text-align: left;
+  transition: border-color 0.3s, background 0.3s;
+}
+.iq-card:hover { border-color: rgba(122,173,255,0.22); background: rgba(24,51,104,0.3); }
+.iq-mark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.4em; text-transform: uppercase;
+  color: rgba(122,173,255,0.38); margin-bottom: 14px;
+}
+.iq-card h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--white); margin-bottom: 10px;
+}
+.iq-card p { font-size: 14px; color: rgba(240,236,232,0.32); line-height: 1.7; }
+.iq-note { font-size: 13px; color: rgba(122,173,255,0.3); font-style: italic; }
+
+/* ════════════════════════════════════════════
+   PAGE 09 — SCHEDULE / COME BY (tall)
+   Ghost: "SUN" — subtle, background right
+════════════════════════════════════════════ */
+#visit {
+  background: var(--purple-mid);
+  padding: 112px 5%;
+  position: relative; overflow: hidden;
+}
+#visit-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 88% 12%, rgba(255,85,0,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 12% 88%, rgba(8,15,44,0.5)   0%, transparent 50%);
+  pointer-events: none;
+}
+#visit .ghost {
+  font-size: clamp(160px, 28vw, 380px);
+  color: rgba(255,255,255,0.025);
+  right: -2%; top: 50%;
+  transform: translateY(-50%);
+}
+.visit-inner { max-width: 1080px; margin: 0 auto; position: relative; z-index: 2; }
+.visit-top {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 64px;
+}
+.visit-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(60px, 9vw, 116px); line-height: 0.84;
+}
+.visit-body p {
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: rgba(255,255,255,0.52); line-height: 1.85; margin-bottom: 20px;
+}
+.visit-body strong { color: rgba(255,255,255,0.82); font-weight: 500; }
+
+.sched-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+}
+.sched-card {
+  background: rgba(5,4,16,0.4); border: 1px solid rgba(255,255,255,0.07);
+  padding: 34px 28px; transition: border-color 0.25s, background 0.25s;
+}
+.sched-card:hover { border-color: rgba(255,85,0,0.22); background: rgba(255,85,0,0.03); }
+.sched-day { font-family: 'Bebas Neue', sans-serif; font-size: 46px; color: var(--orange); line-height: 0.9; margin-bottom: 9px; }
+.sched-type {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(255,255,255,0.28); margin-bottom: 9px;
+}
+.sched-detail { font-size: 14px; color: rgba(255,255,255,0.32); line-height: 1.6; }
+.weather-note { font-size: 12px; color: rgba(255,255,255,0.2); font-style: italic; margin-top: 18px; display: block; }
+
+/* ════════════════════════════════════════════
+   PAGE 10 — SEC™ LOCK YOUR RATE (100vh)
+   Ghost: "SEC" — massive, background
+════════════════════════════════════════════ */
+#sec {
+  min-height: 100vh;
+  background: var(--dark-mid);
+  display: flex; align-items: center;
+  padding: 120px 5%;
+  position: relative; overflow: hidden;
+}
+#sec-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%,   rgba(60,36,105,0.38) 0%, transparent 52%),
+    radial-gradient(ellipse at 50% 100%, rgba(8,15,44,0.5)    0%, transparent 52%);
+  pointer-events: none;
+}
+#sec .ghost {
+  font-size: clamp(160px, 30vw, 420px);
+  color: rgba(255,85,0,0.025);
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  letter-spacing: 0.06em;
+}
+.sec-inner {
+  max-width: 680px; margin: 0 auto; text-align: center; position: relative; z-index: 2; width: 100%;
+}
+.sec-badge {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.42em; text-transform: uppercase;
+  color: var(--orange); border: 1px solid rgba(255,85,0,0.22);
+  padding: 6px 20px; margin-bottom: 36px;
+}
+.sec-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(64px, 11vw, 144px); line-height: 0.84; margin-bottom: 24px;
+}
+.sec-body {
+  font-size: clamp(16px, 1.7vw, 20px);
+  color: rgba(240,236,232,0.48); line-height: 1.85; margin-bottom: 52px;
+}
+.sec-body strong { color: var(--off-white); font-weight: 500; }
+
+.sec-rates {
+  display: flex; align-items: center; justify-content: center; gap: 32px;
+  padding: 28px 36px;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(5,4,16,0.5);
+  margin-bottom: 52px;
+}
+.rate-block { text-align: center; }
+.rate-num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 64px; line-height: 0.88;
+}
+.rate-block-now .rate-num { color: var(--orange); }
+.rate-block-later .rate-num { color: rgba(240,236,232,0.15); }
+.rate-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
+  color: rgba(240,236,232,0.25); margin-top: 6px;
+}
+.rate-vs {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(240,236,232,0.15);
+}
+
+.sec-form { display: flex; gap: 0; margin-bottom: 14px; }
+.sec-form input {
+  flex: 1; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09); border-right: none;
+  color: var(--off-white); padding: 17px 20px;
+  font-family: 'Barlow', sans-serif; font-size: 16px;
+  outline: none; transition: border-color 0.2s;
+}
+.sec-form input::placeholder { color: rgba(240,236,232,0.24); }
+.sec-form input:focus { border-color: rgba(255,85,0,0.4); }
+.sec-form button {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--dark); background: var(--orange); border: none;
+  padding: 0 34px; cursor: pointer; white-space: nowrap; transition: background 0.2s;
+}
+.sec-form button:hover { background: var(--orange-soft); }
+.sec-disc { font-size: 11px; color: rgba(240,236,232,0.18); letter-spacing: 0.06em; }
+.sec-success {
+  display: none; padding: 20px 0;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--orange);
+}
+.sec-success.show { display: block; }
+
+/* ════════════════════════════════════════════
+   PAGE 11 — CONTACT (tall)
+   Ghost: "TALK" — subtle
+════════════════════════════════════════════ */
+#contact {
+  background: var(--dark); padding: 112px 5%;
+  position: relative; overflow: hidden;
+}
+#contact .ghost {
+  font-size: clamp(140px, 24vw, 340px);
+  color: rgba(60,36,105,0.06);
+  left: -3%; bottom: 5%;
+}
+.contact-inner { max-width: 560px; margin: 0 auto; position: relative; z-index: 2; }
+.contact-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 8vw, 100px); line-height: 0.86; margin-bottom: 16px;
+}
+.contact-sub { font-size: clamp(15px, 1.5vw, 17px); color: rgba(240,236,232,0.45); line-height: 1.8; margin-bottom: 44px; }
+.contact-sub strong { color: var(--off-white); font-weight: 500; }
+
+.form-group { margin-bottom: 20px; }
+.form-group label {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.34em; text-transform: uppercase;
+  color: rgba(240,236,232,0.28); margin-bottom: 8px;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08); color: var(--off-white);
+  padding: 14px 16px; font-family: 'Barlow', sans-serif; font-size: 15px;
+  outline: none; transition: border-color 0.2s; -webkit-appearance: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: rgba(255,85,0,0.4); }
+.form-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23ff5500' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; cursor: pointer;
+}
+.form-group select option { background: var(--dark-mid); color: var(--off-white); }
+.form-group textarea { resize: vertical; min-height: 96px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-submit {
+  width: 100%; font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--dark); background: var(--orange); padding: 17px; border: none; cursor: pointer;
+  margin-top: 6px; transition: background 0.2s;
+}
+.form-submit:hover { background: var(--orange-soft); }
+.form-success { display: none; text-align: center; padding: 36px 0; }
+.form-success.show { display: block; }
+.form-success h4 { font-family: 'Bebas Neue', sans-serif; font-size: 44px; color: var(--white); margin-bottom: 12px; }
+.form-success p { font-size: 15px; color: var(--muted); line-height: 1.7; }
+
+/* ════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════ */
+footer {
+  background: var(--ink); padding: 52px 5% 30px;
+  border-top: 1px solid var(--line);
+}
+.footer-inner {
+  max-width: 1080px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center; gap: 40px;
+}
+.footer-orb-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.footer-orb {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: radial-gradient(circle at 36% 36%, var(--purple-lift), var(--purple-deep));
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif; font-size: 12px; color: var(--white);
+}
+.footer-wm {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--white);
+}
+.footer-wm .o { color: var(--orange); }
+.footer-tl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.38em; text-transform: uppercase;
+  color: rgba(255,85,0,0.3); margin-bottom: 8px;
+}
+.footer-loc { font-size: 11px; color: rgba(255,255,255,0.16); line-height: 1.65; }
+.footer-center { text-align: center; }
+.footer-center-mark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
+  color: rgba(255,255,255,0.08);
+}
+.footer-right { text-align: right; }
+.footer-social { display: flex; gap: 20px; justify-content: flex-end; margin-bottom: 10px; }
+.footer-social a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(240,236,232,0.22); text-decoration: none; transition: color 0.2s;
+}
+.footer-social a:hover { color: var(--orange); }
+.footer-copy { font-size: 10px; color: rgba(255,255,255,0.1); letter-spacing: 0.04em; }
+.footer-bottom {
+  max-width: 1080px; margin: 22px auto 0;
+  border-top: 1px solid var(--line); padding-top: 18px;
+  text-align: center; font-size: 10px; color: rgba(255,255,255,0.09); letter-spacing: 0.08em;
+}
+
+/* ════════════════════════════════════════════
+   ANIMATIONS + REVEALS
+════════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes slideRight {
+  from { opacity:0; transform:translateX(-18px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+
+.reveal {
+  opacity:0; transform:translateY(22px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+.rd1{transition-delay:0.06s} .rd2{transition-delay:0.16s}
+.rd3{transition-delay:0.26s} .rd4{transition-delay:0.36s}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════ */
+@media(max-width:900px) {
+  #hero          { grid-template-columns:1fr; padding-top:96px; gap:48px; min-height:auto; padding-bottom:80px; }
+  #hero .ghost   { display:none; }
+  .guide-top, .pricing-top, .offer-inner, .visit-top { grid-template-columns:1fr; gap:48px; }
+  .guide-steps   { grid-template-columns:1fr 1fr; }
+  .voices, .mirror-grid, .iq-cards, .sched-cards { grid-template-columns:1fr; }
+  .decl-defs     { grid-template-columns:1fr; }
+  .footer-inner  { grid-template-columns:1fr; text-align:left; }
+  .footer-right  { text-align:left; }
+  .footer-social { justify-content:flex-start; }
+  .nav-links     { display:none; }
+}
+@media(max-width:560px) {
+  .guide-steps   { grid-template-columns:1fr; }
+  .sec-form      { flex-direction:column; }
+  .sec-form input{ border-right:1px solid rgba(255,255,255,0.09); }
+  .sec-form button{ padding:16px; }
+  .sec-rates     { flex-direction:column; gap:20px; }
+  .form-row      { grid-template-columns:1fr; }
+  .bip-card      { grid-template-columns:1fr; }
+}
+
+/* ════════════════════════════════════════════
+   STICKY COMMERCE BAR (Option B)
+   Fixed bottom — visible on every page
+════════════════════════════════════════════ */
+#sticky-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 850;
+  background: rgba(5,4,16,0.97);
+  backdrop-filter: blur(20px) saturate(1.8);
+  border-top: 1px solid rgba(255,85,0,0.2);
+  padding: 0 5%;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+#sticky-bar.visible { transform: translateY(0); }
+
+/* Left — Grand Opening pulse */
+.sbar-offer {
+  display: flex; align-items: center; gap: 14px; flex-shrink: 0;
+}
+.sbar-pulse {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--orange);
+  box-shadow: 0 0 0 0 rgba(255,85,0,0.5);
+  animation: sbar-pulse 2s ease infinite; flex-shrink: 0;
+}
+@keyframes sbar-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255,85,0,0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(255,85,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,85,0,0); }
+}
+.sbar-offer-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(240,236,232,0.55);
+  white-space: nowrap;
+}
+.sbar-offer-text strong {
+  color: var(--orange); font-weight: 800;
+}
+
+/* Divider */
+.sbar-div {
+  width: 1px; height: 32px; background: rgba(255,255,255,0.08); flex-shrink: 0;
+}
+
+/* Center — SEC™ inline email */
+.sbar-sec {
+  display: flex; align-items: center; gap: 0; flex: 1; max-width: 440px;
+}
+.sbar-sec-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(240,236,232,0.3); white-space: nowrap; margin-right: 12px; flex-shrink: 0;
+}
+.sbar-sec input {
+  flex: 1; min-width: 0;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1); border-right: none;
+  color: var(--off-white); padding: 10px 14px;
+  font-family: 'Barlow', sans-serif; font-size: 13px;
+  outline: none; transition: border-color 0.2s;
+  height: 40px;
+}
+.sbar-sec input::placeholder { color: rgba(240,236,232,0.22); }
+.sbar-sec input:focus { border-color: rgba(255,85,0,0.45); }
+.sbar-sec button {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--dark); background: var(--orange); border: none;
+  padding: 0 20px; cursor: pointer; white-space: nowrap; height: 40px;
+  transition: background 0.2s;
+}
+.sbar-sec button:hover { background: var(--orange-soft); }
+.sbar-sec-done {
+  display: none; font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--orange);
+}
+.sbar-sec-done.show { display: flex; align-items: center; gap: 8px; }
+
+/* Right — start page link */
+.sbar-start {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(240,236,232,0.25); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+  transition: color 0.2s; display: flex; align-items: center; gap: 7px;
+}
+.sbar-start:hover { color: var(--off-white); }
+.sbar-start::before { content: ''; width: 14px; height: 1px; background: currentColor; }
+
+/* Hide label on small screens */
+@media(max-width:760px) {
+  .sbar-offer-text { display: none; }
+  .sbar-div:first-of-type { display: none; }
+  .sbar-sec-label { display: none; }
+}
+@media(max-width:500px) {
+  .sbar-start { display: none; }
+  .sbar-div:last-of-type { display: none; }
+  #sticky-bar { padding: 0 4%; }
+}
+
+/* ════════════════════════════════════════════
+   SEC™ MEMBERSHIP TIERS — upgraded payment flow
+════════════════════════════════════════════ */
+.mem-tiers {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px; margin: 52px 0 32px; text-align: left;
+}
+.mem-tier {
+  background: rgba(8,15,44,0.6);
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: 32px 26px 36px;
+  position: relative; overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.25s, background 0.25s, transform 0.2s;
+}
+.mem-tier:hover { border-color: rgba(255,85,0,0.3); background: rgba(26,51,104,0.3); transform: translateY(-2px); }
+.mem-tier.featured {
+  border-color: rgba(255,85,0,0.35);
+  background: rgba(255,85,0,0.05);
+}
+.mem-tier.featured::before {
+  content: 'Most Popular';
+  position: absolute; top: 0; right: 0;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--dark); background: var(--orange);
+  padding: 5px 12px;
+}
+.mem-tier-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.38em; text-transform: uppercase;
+  color: rgba(240,236,232,0.38); margin-bottom: 16px;
+}
+.mem-tier-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 56px; line-height: 0.88; color: var(--white); margin-bottom: 4px;
+}
+.mem-tier.featured .mem-tier-price { color: var(--orange); }
+.mem-tier-cadence {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(240,236,232,0.28); margin-bottom: 22px;
+}
+.mem-tier-perks { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.mem-tier-perks li {
+  font-size: 13px; color: rgba(240,236,232,0.45); line-height: 1.45;
+  display: flex; gap: 10px; align-items: baseline;
+}
+.mem-tier-perks li::before { content: '✦'; font-size: 8px; color: var(--orange); opacity: 0.55; flex-shrink: 0; margin-top: 2px; }
+.mem-tier-perks li strong { color: rgba(240,236,232,0.75); font-weight: 500; }
+.mem-tier-btn {
+  width: 100%;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(240,236,232,0.55);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 13px; cursor: pointer;
+  transition: all 0.2s;
+}
+.mem-tier-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.25); }
+.mem-tier.featured .mem-tier-btn {
+  color: var(--dark); background: var(--orange); border-color: var(--orange);
+}
+.mem-tier.featured .mem-tier-btn:hover { background: var(--orange-soft); }
+
+.mem-note {
+  font-size: 12px; color: rgba(240,236,232,0.22); font-style: italic;
+  line-height: 1.65; text-align: center; margin-bottom: 0;
+}
+
+/* Modal overlay for tier selection */
+.mem-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9000;
+  background: rgba(5,4,16,0.92); backdrop-filter: blur(12px);
+  align-items: center; justify-content: center; padding: 5%;
+}
+.mem-modal-overlay.open { display: flex; }
+.mem-modal {
+  background: var(--dark-mid);
+  border: 1px solid rgba(255,85,0,0.25);
+  padding: 52px 48px;
+  max-width: 520px; width: 100%; position: relative;
+}
+.mem-modal::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--orange);
+}
+.mem-modal-close {
+  position: absolute; top: 16px; right: 20px;
+  font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: rgba(240,236,232,0.3);
+  cursor: pointer; background: none; border: none; line-height: 1;
+  transition: color 0.2s;
+}
+.mem-modal-close:hover { color: var(--orange); }
+.mem-modal-tier-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.4em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 10px;
+}
+.mem-modal-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 52px; line-height: 0.88; color: var(--white); margin-bottom: 8px;
+}
+.mem-modal-sub {
+  font-size: 14px; color: rgba(240,236,232,0.4); line-height: 1.7; margin-bottom: 36px;
+}
+.mem-modal-sub strong { color: var(--off-white); font-weight: 500; }
+.mem-modal-form { display: flex; flex-direction: column; gap: 14px; }
+.mem-modal-form input {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.09); color: var(--off-white);
+  padding: 14px 16px; font-family: 'Barlow', sans-serif; font-size: 15px;
+  outline: none; transition: border-color 0.2s; width: 100%;
+}
+.mem-modal-form input::placeholder { color: rgba(240,236,232,0.24); }
+.mem-modal-form input:focus { border-color: rgba(255,85,0,0.45); }
+.mem-modal-submit {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--dark); background: var(--orange); border: none;
+  padding: 17px; cursor: pointer; transition: background 0.2s; width: 100%;
+}
+.mem-modal-submit:hover { background: var(--orange-soft); }
+.mem-modal-legal {
+  font-size: 11px; color: rgba(240,236,232,0.18); line-height: 1.6; text-align: center;
+}
+.mem-modal-success {
+  display: none; text-align: center; padding: 20px 0;
+}
+.mem-modal-success.show { display: block; }
+.mem-modal-success h4 {
+  font-family: 'Bebas Neue', sans-serif; font-size: 44px; color: var(--orange); margin-bottom: 10px;
+}
+.mem-modal-success p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+@media(max-width:760px) { .mem-tiers { grid-template-columns:1fr; } }
+@media(max-width:500px) { .mem-modal { padding: 40px 28px; } }
+
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <a class="nav-left" href="#">
+    <div class="nav-orb">1</div>
+    <div class="nav-wordmark">The Sharper <span class="o">ONE</span>™</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#declaration">SiMPLE™</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#visit">Come By</a></li>
+    <li><a href="#sec">Lock My Rate</a></li>
+  </ul>
+  <a href="#sec" class="nav-cta">Lock My Rate</a>
+</nav>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE 01 — HERO
+══════════════════════════════════════════ -->
+<section id="hero">
+  <div id="hero-bg"></div>
+  <div class="ghost">1</div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">Parker · Hood · Johnson Counties</div>
+
+    <h1 class="hero-headline">
+      <span class="gtext-white">Edge.<br></span>
+      <span class="gtext-orange">Restored.<span class="tm">™</span></span>
+    </h1>
+
+    <p class="hero-subhead">Sharper by Design<span style="color:rgba(255,85,0,0.6);font-size:0.65em;vertical-align:super">™</span></p>
+
+    <p class="hero-wound">
+      A dull blade isn't just inconvenient — it's costing you
+      <strong>time, precision, and the joy of the work.</strong>
+      One price. One standard. Done while you wait.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#sec" class="btn-primary">Lock My Rate</a>
+      <a href="#declaration" class="btn-ghost">What We Do</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-right-inner">
+      <div class="got-one">
+        <span class="gtext-white">Got</span><br>
+        <span class="gtext-orange">ONE<span class="tm">™</span>?</span>
+      </div>
+      <p class="got-setup">
+        Before the big cook. Before the job site.<br>
+        Before any of that matters —
+      </p>
+
+      <div class="personas">
+        <div class="persona">
+          <span class="persona-dot"></span>
+          <span class="persona-role">Chef</span>
+          <span class="persona-cost">Your knife drags. Your cut suffers. Your dish pays.</span>
+        </div>
+        <div class="persona">
+          <span class="persona-dot"></span>
+          <span class="persona-role">Landscaper</span>
+          <span class="persona-cost">Dull tools tear. Tearing means double the pass. Double the time.</span>
+        </div>
+        <div class="persona">
+          <span class="persona-dot"></span>
+          <span class="persona-role">Barber</span>
+          <span class="persona-cost">A shear that drags doesn't just pull — it tells on you.</span>
+        </div>
+        <div class="persona">
+          <span class="persona-dot"></span>
+          <span class="persona-role">Homeowner</span>
+          <span class="persona-cost">A sharp kitchen is a different kitchen entirely.</span>
+        </div>
+        <div class="persona">
+          <span class="persona-dot"></span>
+          <span class="persona-role">Tradesperson</span>
+          <span class="persona-cost">Your edge is your rate. Protect it.</span>
+        </div>
+        <div class="persona">
+          <span class="persona-dot"></span>
+          <span class="persona-role">Hobbyist</span>
+          <span class="persona-cost">The craft deserves the edge. So do you.</span>
+        </div>
+      </div>
+
+      <div class="hero-anchor">
+        <div class="hero-anchor-main">Edge. Restored. — 877.926.9326</div>
+        <div class="hero-anchor-sub">sharper.one · Parker · Hood · Johnson Counties</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE 02 — MANIFESTO
+     "Every LiFE™ Has a ONE™"
+══════════════════════════════════════════ -->
+<section id="manifesto">
+  <div id="manifesto-bg"></div>
+  <div class="ghost">ONE</div>
+
+  <div class="manifesto-inner">
+    <div class="manifesto-kicker reveal">The ONE™ · Occasional or Often Needed Edge</div>
+
+    <h2 class="manifesto-truth reveal">
+      Every <span class="gtext-blue">LiFE<span class="tm">™</span></span><br>
+      has a <span class="gtext-orange">ONE<span class="tm">™</span>.</span>
+    </h2>
+
+    <div class="one-pill reveal">
+      <div class="one-pill-mark">ONE™</div>
+      <div class="one-pill-text">
+        <em>O</em>ccasional or <em>O</em>ften <em>N</em>eeded <em>E</em>dge
+      </div>
+    </div>
+
+    <div class="voices">
+      <div class="voice voice-a reveal rd1">
+        <div class="voice-lbl">The Quiet Voice</div>
+        <div class="voice-title">It's<br>not small.</div>
+        <div class="voice-body">
+          <p>A dull blade isn't a small thing. It's the sum of every moment your tool worked <strong>against you instead of with you.</strong></p>
+          <p>The cook that took longer. The cut that didn't land. The job that wore you out before it should have. The craft session that ended in frustration instead of flow.</p>
+          <p>These aren't isolated moments. They're a pattern — <strong>the slow erosion of LiFE™.</strong> Living in Full Enjoyment, chipped away one dull edge at a time.</p>
+        </div>
+        <div class="voice-pull">"The dull blade doesn't just slow you down. It slowly convinces you that this is just how things feel."</div>
+      </div>
+
+      <div class="voice voice-b reveal rd2">
+        <div class="voice-lbl">The Direct Voice</div>
+        <div class="voice-title">You've<br>been<br>robbed.</div>
+        <div class="voice-body">
+          <p>You've been losing time, confidence, and joy to dull tools — and you've called it <strong>normal.</strong></p>
+          <p>It isn't.</p>
+          <p>Your ONE™ — your Occasional or Often Needed Edge — has been going unaddressed. It's stealing the <strong>fun of the thing.</strong> The pride in the craft. The satisfaction of tools that answer to you.</p>
+          <p><span class="bm">The Sharper ONE™</span> is a simple intervention with an unreasonably large return. Bring the blade. Restore the edge. Get your LiFE™ back.</p>
+        </div>
+        <div class="voice-pull">"You didn't know you were tolerating it until you held something sharp again."</div>
+      </div>
+
+      <div class="voice voice-c reveal rd3">
+        <div class="voice-lbl">The Ministerial Voice</div>
+        <div class="voice-title">Every<br>art.<br>Every<br>kraft.</div>
+        <div class="voice-body">
+          <p>Every art has an edge. Every kraft has a blade. Every life has a ONE™ — that <em>occasional or often needed edge</em> that, when sharp, makes everything <strong>flow.</strong> When dull, makes everything <strong>drag.</strong></p>
+          <p>We are not in the sharpening business. We are in the <strong>LiFE™ business.</strong> The edge just happens to be where it starts.</p>
+          <p>Those who find <span class="bm">The Sharper ONE™</span> before it was obvious will celebrate. They always do. They know the power of a silly thing — <em>like a sharp knife.</em></p>
+        </div>
+        <div class="voice-pull">"It isn't silly at all. The laugh of recognition is the same laugh as relief."</div>
+      </div>
+    </div>
+
+    <div class="convergence reveal">
+      <div class="conv-threads">
+        <div class="conv-line"></div>
+        <div class="conv-line"></div>
+        <div class="conv-line"></div>
+      </div>
+      <div class="conv-node"></div>
+      <p class="conv-truth">
+        The reader, the viewer, the partaker, the tribal member — each finds the voice that reaches them.
+        All of them are looking for the same thing:
+        <strong>the richer fulfillment that lies just beyond the doing of the thing.</strong>
+      </p>
+      <p class="conv-sub">Got ONE™? — sharper.one · 877.926.9326</p>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE 03 — SiMPLE™ / iT™ DECLARATION
+     "We don't sharpen blades."
+══════════════════════════════════════════ -->
+<section id="declaration">
+  <div id="declaration-bg"></div>
+  <div class="ghost">SiMPLE</div>
+
+  <div class="declaration-inner">
+    <div class="decl-not reveal">We don't sharpen blades.</div>
+
+    <h2 class="decl-headline reveal">
+      <span class="gtext-blue">We do</span><br>
+      <span class="gtext-orange">SiMPLE<span class="tm">™</span>.</span>
+    </h2>
+
+    <p class="decl-method reveal">
+      Sharpening is our way of doing <em>iT™</em> —
+      intentional Transformation.<br>
+      The blade is the vehicle. SiMPLE™ is the destination.
+    </p>
+
+    <div class="decl-defs">
+      <div class="decl-def reveal rd1">
+        <div class="decl-def-mark">SiMPLE™</div>
+        <h4>Succeeding in<br>Making People's<br><em>Lives Easier</em></h4>
+        <p>Every touchpoint — the pricing, the process, the pickup — is designed to <strong>remove friction from your day.</strong> Not add to it. The sharpening is just how we deliver that.</p>
+      </div>
+      <div class="decl-def reveal rd2">
+        <div class="decl-def-mark">iT™</div>
+        <h4>intentional<br><em>Transformation</em></h4>
+        <p>We didn't stumble into sharpening. We chose it deliberately — as a <strong>vehicle for doing something meaningful.</strong> Craft in service of community. Edge in service of LiFE™.</p>
+      </div>
+    </div>
+
+    <p class="decl-closer reveal">
+      Sharpening is an offering we give to those who find us along the way.
+      It is our way of expressing <strong>who we are</strong> — and we've found a way that is entirely <strong>in Our Way.</strong>
+    </p>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE 04 — THE MIRROR
+     What it costs you
+══════════════════════════════════════════ -->
+<section id="mirror">
+  <div id="mirror-bg"></div>
+  <div class="ghost">$10</div>
+
+  <div class="mirror-inner">
+    <div class="mirror-head">
+      <div class="s-eyebrow reveal">The Real Cost</div>
+      <h2 class="mirror-headline reveal">
+        What a dull blade<br>
+        <span class="gtext-orange">actually costs you.</span>
+      </h2>
+    </div>
+
+    <div class="mirror-grid">
+      <div class="mirror-card reveal rd1">
+        <div class="mirror-who">The Kitchen</div>
+        <div class="mirror-loss">
+          <span class="gtext-white">Wasted cuts.</span><br>
+          <span class="gtext-white">Wasted time.</span><br>
+          <span class="gtext-orange">Wasted food.</span>
+        </div>
+        <p class="mirror-detail">A dull kitchen knife doesn't just slow you down — it changes how you cook. You compensate, adjust, rush. The blade is telling you something. So is your food.</p>
+      </div>
+      <div class="mirror-card reveal rd2">
+        <div class="mirror-who">The Job Site</div>
+        <div class="mirror-loss">
+          <span class="gtext-white">More passes.</span><br>
+          <span class="gtext-white">More wear.</span><br>
+          <span class="gtext-orange">More cost.</span>
+        </div>
+        <p class="mirror-detail">Every dull blade means extra time on the material, extra stress on equipment, extra fuel burned. At scale, that's real money walking out the door every week.</p>
+      </div>
+      <div class="mirror-card reveal rd3">
+        <div class="mirror-who">The Chair & The Bench</div>
+        <div class="mirror-loss">
+          <span class="gtext-white">Lost confidence.</span><br>
+          <span class="gtext-white">Lost clients.</span><br>
+          <span class="gtext-orange">Lost reputation.</span>
+        </div>
+        <p class="mirror-detail">Barbers and woodworkers both know the feeling of a tool that's not right. You feel it before the client does. But the client always finds out eventually.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE 05 — HOW IT WORKS
+══════════════════════════════════════════ -->
+<section id="guide">
+  <div class="ghost">SIMPLE</div>
+  <div class="guide-inner">
+    <div class="guide-top">
+      <div>
+        <div class="s-eyebrow reveal">How We Do iT™</div>
+        <h2 class="guide-headline reveal">
+          <span class="gtext-white">Simple.</span><br>
+          <span class="gtext-white">Fast.</span><br>
+          <span class="gtext-orange">Sharp.</span>
+        </h2>
+      </div>
+      <div class="guide-body reveal">
+        <p>
+          We built The Sharper ONE™ on one operating principle: <strong>the customer should never need to measure their knife.</strong>
+          No per-inch pricing. No category confusion. No friction.
+        </p>
+        <p>
+          You bring the blade. We restore the edge. You leave knowing exactly what you paid and exactly what you got.
+          Most work is done while you wait.
+        </p>
+        <p>
+          <strong>This is what Sharper by Design™ means.</strong>
+          The experience is as intentional as the edge we put on your tools.
+          SiMPLE™ in action. iT™ delivered.
+        </p>
+      </div>
+    </div>
+    <div class="guide-steps">
+      <div class="guide-step reveal rd1">
+        <div class="step-n">01</div>
+        <h4>Bring It In</h4>
+        <p>Walk up, drop off, or reach out. No appointment needed on open-air days.</p>
+      </div>
+      <div class="guide-step reveal rd2">
+        <div class="step-n">02</div>
+        <h4>We Assess</h4>
+        <p>Every blade is evaluated before we begin. If it deserves more, we'll say so — before we touch it.</p>
+      </div>
+      <div class="guide-step reveal rd3">
+        <div class="step-n">03</div>
+        <h4>Edge Is Restored</h4>
+        <p>Professional equipment. Methodical process. Not rushed — but not slow. This is what we do.</p>
+      </div>
+      <div class="guide-step reveal rd4">
+        <div class="step-n">04</div>
+        <h4>You Walk Away</h4>
+        <p>Sharp. Packaged safely. Confident. The edge is yours. The satisfaction is ours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE 06 — PRICING (SiMPLE™ — $10 flat)
+══════════════════════════════════════════ -->
+<section id="pricing">
+  <div id="pricing-bg"></div>
+  <div class="ghost">$10</div>
+
+  <div class="pricing-inner">
+    <div class="pricing-top">
+      <div>
+        <div class="s-eyebrow reveal">Pricing</div>
+        <h2 class="pricing-headline reveal">
+          <span class="gtext-white">One price.</span><br>
+          <span class="gtext-orange">Any blade.</span><br>
+          <span class="gtext-white">$10.</span>
+        </h2>
+      </div>
+      <div class="reveal">
+        <p class="pricing-philo">
+          The sharpening industry made pricing complicated on purpose.
+          <strong>We haven't.</strong> Every blade. Every tool. Every time.
+          Bring it. Pay $10. Walk away sharp.
+          That's SiMPLE™ — and it's the whole point.
+        </p>
+      </div>
+    </div>
+
+    <div class="price-list reveal">
+      <div class="price-row">
+        <div class="price-row-left"><h4>Kitchen Knife</h4><p>Chef's, santoku, utility, paring, bread</p></div>
+        <div class="price-amt">$10</div>
+      </div>
+      <div class="price-row">
+        <div class="price-row-left"><h4>Scissors & Shears</h4><p>Kitchen, fabric, barber, garden</p></div>
+        <div class="price-amt">$10</div>
+      </div>
+      <div class="price-row">
+        <div class="price-row-left"><h4>Hunting Knife</h4><p>Fixed blade hunting knives</p></div>
+        <div class="price-amt">$10</div>
+      </div>
+      <div class="price-row">
+        <div class="price-row-left"><h4>Standard Folder</h4><p>Everyday carry and pocket knives</p></div>
+        <div class="price-amt">$10</div>
+      </div>
+      <div class="price-row">
+        <div class="price-row-left"><h4>Axe / Hatchet</h4><p>Full bevel restore</p></div>
+        <div class="price-amt">$10</div>
+      </div>
+      <div class="price-row">
+        <div class="price-row-left"><h4>Lawn Mower Blade</h4><p>Standard and mulching blades</p></div>
+        <div class="price-amt">$10</div>
+      </div>
+      <div class="price-row">
+        <div class="price-row-left"><h4>Chisel / Plane Iron</h4><p>Woodworking and trade tools</p></div>
+        <div class="price-amt">$10</div>
+      </div>
+      <div class="price-row">
+        <div class="price-row-left"><h4>Outdoor Implements</h4><p>Shovels, hoes, loppers & larger tools</p></div>
+        <div class="price-amt">$10</div>
+      </div>
+    </div>
+
+    <div class="bip-card reveal">
+      <div class="bip-icon">✦</div>
+      <div class="bip-text">
+        <h5>BiP™ — Below Industry Pricing Recommendation</h5>
+        <p>
+          Some blades deserve deeper restoration work. When we see one, we'll tell you what it deserves — and what the industry typically charges.
+          <strong>The price stays $10 either way.</strong>
+          Choosing BiP™ doesn't cost you more money.
+          <em>It secures your slot.</em>
+          It helps us schedule priority time for your blade among our other clients.
+          Declining is always respected. The edge still gets restored. The wait may simply grow as our book fills.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE 07 — GRAND OPENING OFFER
+══════════════════════════════════════════ -->
+<section id="offer">
+  <div id="offer-bg"></div>
+  <div class="ghost">3</div>
+
+  <div class="offer-inner">
+    <div class="offer-left reveal">
+      <div class="s-eyebrow">Grand Opening</div>
+      <h2>
+        Bring<br>more.<br>
+        <span class="gtext-orange">Pay less.</span>
+      </h2>
+      <p>We're just getting started — and we want the neighborhood to feel that.
+        <strong>Bring three items, only pay for two.</strong></p>
+      <p>No coupon code. No fine print. Just bring your blades.</p>
+      <p class="offer-fine">
+        This offer runs until further notice. No deadline pressure.
+        When it ends, we'll say so. Until then, it's yours.
+      </p>
+    </div>
+
+    <div class="offer-card reveal rd2">
+      <div class="offer-card-lbl">The Grand Opening Deal</div>
+      <div class="offer-deal">Bring 3.<br><em>Pay for 2.</em></div>
+      <div class="offer-deal-sub">Lowest-priced item is on us</div>
+      <hr class="offer-rule">
+      <div class="offer-rows">
+        <div class="offer-row"><span class="offer-item">Item 1 (e.g. Kitchen Knife)</span><span class="offer-paid">$10</span></div>
+        <div class="offer-row"><span class="offer-item">Item 2 (e.g. Scissors)</span><span class="offer-paid">$10</span></div>
+        <div class="offer-row"><span class="offer-item">Item 3 (e.g. Pocket Knife)</span><span class="offer-free">FREE</span></div>
+      </div>
+      <hr class="offer-rule">
+      <div class="offer-badge">
+        <div class="badge-dot"></div>
+        Available now — until further notice
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE 08 — iQ™ SEED
+     "Your blade, remembered."
+══════════════════════════════════════════ -->
+<section id="iq">
+  <div id="iq-bg"></div>
+  <div class="ghost">iQ</div>
+
+  <div class="iq-inner">
+    <div class="s-eyebrow-blue reveal" style="justify-content:center">Coming Into The Edge</div>
+    <h2 class="iq-headline reveal">
+      Your blade,<br>
+      <span class="gtext-orange">remembered.<span class="tm">™</span></span>
+    </h2>
+    <p class="iq-sub reveal">
+      Most sharpening is transactional. Ours isn't.
+      <strong>We're building edge intelligence</strong> — a system that learns your tools, tracks your history, and serves your craft over time.
+      It starts with a sharpen. It becomes something more.
+    </p>
+
+    <div class="iq-cards">
+      <div class="iq-card reveal rd1">
+        <div class="iq-mark">iQ™ Edge</div>
+        <h4>Edge Tracking</h4>
+        <p>Every blade that comes through gets noted. Steel type. Edge angle. Condition. We build your history so you don't have to explain your knife every time.</p>
+      </div>
+      <div class="iq-card reveal rd2">
+        <div class="iq-mark">iQ™ Edge</div>
+        <h4>Blade Identity</h4>
+        <p>Select blades receive a discreet mark — a badge of belonging that travels with the tool. A conversation starter. Proof that someone cared enough to know it.</p>
+      </div>
+      <div class="iq-card reveal rd3">
+        <div class="iq-mark">iQ™ Edge</div>
+        <h4>The Registry</h4>
+        <p>Founding clients get early access to the full iQ™ Edge system — analytics, predictive sharpening, edge history. Coming soon. SEC™ members get in first.</p>
+      </div>
+    </div>
+    <p class="iq-note reveal">Founding members lock the rate. The system is being built. The edge is already here.</p>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE 09 — COME BY / SCHEDULE
+══════════════════════════════════════════ -->
+<section id="visit">
+  <div id="visit-bg"></div>
+  <div class="ghost">SUN</div>
+
+  <div class="visit-inner">
+    <div class="visit-top">
+      <div>
+        <div class="s-eyebrow reveal">When to Come By</div>
+        <h2 class="visit-headline reveal">
+          <span class="gtext-white">We're here.</span><br>
+          <span class="gtext-orange">Come by.</span>
+        </h2>
+      </div>
+      <div class="visit-body reveal">
+        <p>Not a shop. Not a storefront. A craftsman in the neighborhood with equipment and a standard.
+          <strong>Drop-off available most days.</strong>
+          For open-air sharpening — Sunday or Wednesday.
+        </p>
+        <p>Want to watch? Come through. Want to drop and go? That works too. We'll reach out when it's ready.</p>
+        <a href="#contact" class="btn-primary" style="margin-top:12px">Send Us a Note</a>
+      </div>
+    </div>
+    <div class="sched-cards">
+      <div class="sched-card reveal rd1">
+        <div class="sched-day">Sunday</div>
+        <div class="sched-type">Open-Air Day</div>
+        <div class="sched-detail">Watch it get done. Drop off, pick up, or just come see how sharp looks.</div>
+      </div>
+      <div class="sched-card reveal rd2">
+        <div class="sched-day">Wednesday</div>
+        <div class="sched-type">Open-Air Day</div>
+        <div class="sched-detail">Midweek sharpening. Bring your tools. Leave with edges.</div>
+      </div>
+      <div class="sched-card reveal rd3">
+        <div class="sched-day">Most Days</div>
+        <div class="sched-type">Drop-Off Available</div>
+        <div class="sched-detail">Leave it. We'll get to it. We'll reach out when it's ready.</div>
+      </div>
+    </div>
+    <span class="weather-note reveal">☁️ Open-air days are weather permitting. Confirm before making the trip.</span>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE 10 — SEC™ LOCK YOUR RATE
+══════════════════════════════════════════ -->
+<section id="sec">
+  <div id="sec-bg"></div>
+  <div class="ghost">SEC</div>
+
+  <div class="sec-inner">
+    <div class="sec-badge reveal">Founding Members Only</div>
+    <h2 class="sec-headline reveal">
+      <span class="gtext-white">Lock your rate.</span><br>
+      <span class="gtext-orange">Stay Sharp.</span>
+    </h2>
+    <p class="sec-body reveal">
+      Pricing evolves as the business grows — that's honesty, not a threat.
+      But founding members lock in their rate permanently.
+      <strong>Join now at $10. Stay at $10.</strong>
+      When the public rate moves, yours doesn't. That's the SEC™ promise.
+    </p>
+
+    <div class="sec-rates reveal">
+      <div class="rate-block rate-block-now">
+        <div class="rate-num">$10</div>
+        <div class="rate-label">Your rate — now & always</div>
+      </div>
+      <div class="rate-vs">vs.</div>
+      <div class="rate-block rate-block-later">
+        <div class="rate-num">$13+</div>
+        <div class="rate-label">Public rate — coming soon</div>
+      </div>
+    </div>
+
+    <!-- MEMBERSHIP TIERS -->
+    <div class="mem-tiers reveal">
+
+      <!-- TIER 1 — Edge Holder (Free) -->
+      <div class="mem-tier" onclick="openMembership('edge-holder')">
+        <div class="mem-tier-name">Edge Holder</div>
+        <div class="mem-tier-price">$0</div>
+        <div class="mem-tier-cadence">Free · Always</div>
+        <ul class="mem-tier-perks">
+          <li><strong>Rate locked at $10</strong> per blade, per visit</li>
+          <li>Grand Opening deal — Bring 3, Pay 2</li>
+          <li>Email updates on open-air days</li>
+          <li>First to know when iQ™ Edge launches</li>
+        </ul>
+        <button class="mem-tier-btn">Join Free</button>
+      </div>
+
+      <!-- TIER 2 — Edge Member ($10/yr) — FEATURED -->
+      <div class="mem-tier featured" onclick="openMembership('edge-member')">
+        <div class="mem-tier-name">Edge Member</div>
+        <div class="mem-tier-price">$10</div>
+        <div class="mem-tier-cadence">Per year · SEC™ locked</div>
+        <ul class="mem-tier-perks">
+          <li><strong>Rate locked at $10</strong> — even as public rate rises</li>
+          <li>Priority scheduling over walk-up queue</li>
+          <li>Grand Opening deal — Bring 3, Pay 2</li>
+          <li><strong>iQ™ Edge early access</strong> when it launches</li>
+          <li>Founding Member status — permanent record</li>
+        </ul>
+        <button class="mem-tier-btn">Join · $10 / Year</button>
+      </div>
+
+      <!-- TIER 3 — Edge Founder ($25 lifetime) -->
+      <div class="mem-tier" onclick="openMembership('edge-founder')">
+        <div class="mem-tier-name">Edge Founder</div>
+        <div class="mem-tier-price">$25</div>
+        <div class="mem-tier-cadence">Once · Lifetime · Forever</div>
+        <ul class="mem-tier-perks">
+          <li><strong>Rate locked for life</strong> — pay once, never again</li>
+          <li>Priority scheduling — always</li>
+          <li>Grand Opening deal — Bring 3, Pay 2</li>
+          <li><strong>iQ™ Edge Founder access</strong> + blade registry priority</li>
+          <li>Founding Member status — first 100 only</li>
+          <li><strong>Name in the registry.</strong> Believers before the reason.</li>
+        </ul>
+        <button class="mem-tier-btn">Become a Founder · $25</button>
+      </div>
+
+    </div><!-- /mem-tiers -->
+
+    <p class="mem-note reveal">
+      Paid tiers process via Square — secure, no account required.
+      Free tier locks your rate instantly with your email.
+      All founding member rates are guaranteed in writing on receipt.
+    </p>
+
+  </div>
+</section>
+
+<div class="sep"></div>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE 11 — CONTACT
+══════════════════════════════════════════ -->
+<section id="contact">
+  <div class="ghost">TALK</div>
+  <div class="contact-inner">
+    <div class="s-eyebrow reveal">Get In Touch</div>
+    <h2 class="contact-headline reveal">
+      <span class="gtext-white">Let's talk</span><br>
+      <span class="gtext-orange">sharp.</span>
+    </h2>
+    <p class="contact-sub reveal">
+      Got a drawer full of dull knives? Running a restaurant?
+      Working a job site? <strong>Just drop us a note.</strong> We'll figure out what you need.
+    </p>
+    <div id="contactForm">
+      <div class="form-row">
+        <div class="form-group"><label>Your Name</label><input type="text" id="cName" placeholder="First & last"></div>
+        <div class="form-group"><label>Phone or Text</label><input type="tel" id="cPhone" placeholder="Best number"></div>
+      </div>
+      <div class="form-group">
+        <label>What brings you by?</label>
+        <select id="cType">
+          <option value="" disabled selected>Choose one...</option>
+          <option>Open-air drop-off (Sun or Wed)</option>
+          <option>Drop-off on a regular day</option>
+          <option>Batch order — lots of tools</option>
+          <option>Restaurant or trade account</option>
+          <option>Just have a question</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tell us more (optional)</label>
+        <textarea id="cNote" placeholder="What do you have? How many pieces? Any questions?"></textarea>
+      </div>
+      <button class="form-submit" onclick="submitContact()">Send It</button>
+    </div>
+    <div class="form-success" id="formSuccess">
+      <h4>Got it.</h4>
+      <p>We'll get back to you. Bring your blades — we'll have them sharp and ready.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-orb-row">
+        <div class="footer-orb">1</div>
+        <div class="footer-wm">The Sharper <span class="o">ONE</span>™</div>
+      </div>
+      <div class="footer-tl">Edge. Restored.</div>
+      <div class="footer-loc">
+        Parker · Hood · Johnson Counties · The Metroplex's Edge<br>
+        877.926.9326 · sharper.one
+      </div>
+    </div>
+    <div class="footer-center">
+      <div class="footer-center-mark">Sharper by Design™</div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-social">
+        <a href="https://nextdoor.com" target="_blank" rel="noopener">Nextdoor</a>
+        <a href="https://facebook.com/itsthesharper.one" target="_blank" rel="noopener">Facebook</a>
+      </div>
+      <div class="footer-copy">© 2026 The Sharper ONE™ — All Rights Reserved.</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    Sharper by Design™ · SiMPLE™ · iT™ · iQ™ Edge · SEC™ · LiFE™ · ONE™ · Edge. Restored.™
+  </div>
+</footer>
+
+
+<!-- ══ STICKY COMMERCE BAR ══ -->
+<div id="sticky-bar">
+
+  <!-- Grand Opening pulse signal -->
+  <div class="sbar-offer">
+    <div class="sbar-pulse"></div>
+    <div class="sbar-offer-text">
+      Grand Opening: <strong>Bring 3, Pay 2</strong> · $10 flat
+    </div>
+  </div>
+
+  <div class="sbar-div"></div>
+
+  <!-- SEC™ inline email lock -->
+  <div class="sbar-sec">
+    <div class="sbar-sec-label">Lock My Rate</div>
+    <div id="sbar-form-wrap" style="display:flex;flex:1;min-width:0">
+      <input type="email" id="sbarEmail" placeholder="Email — lock $10 rate free">
+      <button onclick="joinStickyBar()">Join</button>
+    </div>
+    <div class="sbar-sec-done" id="sbar-done">
+      ✦ Rate locked. Welcome to the Edge.
+    </div>
+  </div>
+
+  <div class="sbar-div"></div>
+
+  <!-- Link to start page -->
+  <a href="https://sharper.one/start" class="sbar-start" target="_blank" rel="noopener">
+    sharper.one/start
+  </a>
+
+</div><!-- /sticky-bar -->
+
+
+<!-- ══ MEMBERSHIP MODAL ══ -->
+<div class="mem-modal-overlay" id="memModal">
+  <div class="mem-modal">
+    <button class="mem-modal-close" onclick="closeMembership()">✕</button>
+
+    <div id="mem-modal-form-inner" style="display:flex;flex-direction:column">
+      <div class="mem-modal-tier-name" id="modal-tier-name">Edge Member</div>
+      <div class="mem-modal-headline" id="modal-headline">$10 / Year.</div>
+      <p class="mem-modal-sub" id="modal-sub">Your founding member rate is locked permanently.</p>
+
+      <div class="mem-modal-form">
+        <input type="text"  id="mem-name"  placeholder="Your first & last name">
+        <input type="email" id="mem-email" placeholder="Your email address">
+        <input type="tel"   id="mem-phone" placeholder="Phone (optional — for scheduling)">
+
+        <!-- Payment row — shown for paid tiers -->
+        <div id="modal-payment-row" style="display:none">
+          <input type="text" id="mem-card"
+            placeholder="Payment via Square — you'll receive a secure link"
+            readonly
+            style="cursor:default;color:rgba(240,236,232,0.28);font-size:13px"
+            onfocus="this.blur()">
+        </div>
+
+        <button class="mem-modal-submit" id="modal-submit" onclick="submitMembership()">
+          Lock My Rate — Free
+        </button>
+
+        <p class="mem-modal-legal" id="modal-payment-note" style="display:none">
+          Paid membership completes via Square secure checkout —
+          a link will be sent to your email within 24 hours.
+          Your rate is locked the moment you submit this form.
+        </p>
+        <p class="mem-modal-legal">
+          No spam. No games. Founding member status guaranteed in writing on confirmation.
+        </p>
+      </div>
+    </div><!-- /form-inner -->
+
+    <div class="mem-modal-success" id="mem-modal-success">
+      <h4>You're in.</h4>
+      <p>
+        Rate locked. Founding member status confirmed.<br>
+        Welcome to the Edge. We'll be in touch.
+      </p>
+    </div>
+
+  </div><!-- /mem-modal -->
+</div><!-- /overlay -->
+
+
+<script>
+/* Scroll reveals */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ── Sticky bar — slides in after first scroll ── */
+const stickyBar = document.getElementById('sticky-bar');
+let stickyShown = false;
+window.addEventListener('scroll', () => {
+  if (!stickyShown && window.scrollY > 320) {
+    stickyBar.classList.add('visible');
+    stickyShown = true;
+  }
+}, { passive: true });
+
+/* ── Sticky bar SEC™ join ── */
+function joinStickyBar() {
+  const email = document.getElementById('sbarEmail').value.trim();
+  if (!email || !email.includes('@')) {
+    const inp = document.getElementById('sbarEmail');
+    inp.style.borderColor = 'rgba(255,85,0,0.7)';
+    setTimeout(() => inp.style.borderColor = '', 2000);
+    return;
+  }
+  document.getElementById('sbar-form-wrap').style.display = 'none';
+  document.getElementById('sbar-done').classList.add('show');
+}
+
+/* ── Membership modal ── */
+const tierData = {
+  'edge-holder': {
+    name: 'Edge Holder',
+    headline: 'Join Free.',
+    price: '$0',
+    sub: 'Your rate is locked at <strong>$10 per blade, forever.</strong> No payment required. Just your email — and your word that you\'re in.',
+    cta: 'Lock My Rate — Free',
+    hasPayment: false
+  },
+  'edge-member': {
+    name: 'Edge Member — SEC™',
+    headline: '$10 / Year.',
+    price: '$10',
+    sub: 'Your founding member rate is locked permanently. Priority scheduling. iQ™ Edge early access. <strong>$10 today. $10 always.</strong> Public rate rises — yours doesn\'t.',
+    cta: 'Join · $10 / Year',
+    hasPayment: true
+  },
+  'edge-founder': {
+    name: 'Edge Founder — Lifetime',
+    headline: '$25. Once.',
+    price: '$25',
+    sub: 'Pay once. Never again. <strong>Founding member for life.</strong> Your name in the registry. First 100 only. The believers before the reason.',
+    cta: 'Become a Founder · $25',
+    hasPayment: true
+  }
+};
+
+function openMembership(tier) {
+  const d = tierData[tier];
+  document.getElementById('modal-tier-name').textContent    = d.name;
+  document.getElementById('modal-headline').textContent     = d.headline;
+  document.getElementById('modal-sub').innerHTML            = d.sub;
+  document.getElementById('modal-submit').textContent       = d.cta;
+  document.getElementById('modal-payment-row').style.display = d.hasPayment ? 'block' : 'none';
+  document.getElementById('modal-payment-note').style.display = d.hasPayment ? 'block' : 'none';
+  document.getElementById('mem-modal-form-inner').style.display = 'flex';
+  document.getElementById('mem-modal-success').classList.remove('show');
+  document.getElementById('memModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMembership() {
+  document.getElementById('memModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function submitMembership() {
+  const name  = document.getElementById('mem-name').value.trim();
+  const email = document.getElementById('mem-email').value.trim();
+  if (!name || !email || !email.includes('@')) {
+    ['mem-name','mem-email'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim() || (id === 'mem-email' && !el.value.includes('@'))) {
+        el.style.borderColor = 'rgba(255,85,0,0.65)';
+        setTimeout(() => el.style.borderColor = '', 2200);
+      }
+    });
+    return;
+  }
+  document.getElementById('mem-modal-form-inner').style.display = 'none';
+  document.getElementById('mem-modal-success').classList.add('show');
+}
+
+/* Close modal on overlay click */
+document.getElementById('memModal').addEventListener('click', function(e) {
+  if (e.target === this) closeMembership();
+});
+
+/* Contact */
+function submitContact() {
+  const name  = document.getElementById('cName').value.trim();
+  const phone = document.getElementById('cPhone').value.trim();
+  const type  = document.getElementById('cType').value;
+  if(!name || !phone || !type) {
+    ['cName','cPhone','cType'].forEach(id => {
+      const el = document.getElementById(id);
+      if(!el.value.trim()) {
+        el.style.borderColor = 'rgba(255,85,0,0.65)';
+        setTimeout(() => el.style.borderColor = '', 2200);
+      }
+    });
+    return;
+  }
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('formSuccess').classList.add('show');
+}
+</script>
+
+</body>
+</html>
