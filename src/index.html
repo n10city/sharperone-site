@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Sharper ONE™ | Every LiFE™ Has a ONE™</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
@@ -238,6 +241,67 @@ nav {
   top: 50%;
   transform: translateY(-52%);
   letter-spacing: -0.04em;
+}
+
+/* ── Hero knife image layer ──
+   Sits between the bg gradient (z:0) and content (z:2)
+   mix-blend-mode: luminosity dissolves it into the atmosphere.
+   Swap src="" with real photo — zero code change required.     */
+#hero-knife {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+#hero-knife img {
+  position: absolute;
+  /* Flat-lay image — anchor to right half, slightly tilted to echo the roll diagonal */
+  right: -8%;
+  top: 50%;
+  transform: translateY(-46%) rotate(-8deg);
+  width: clamp(500px, 72%, 960px);
+  height: auto;
+  opacity: 0.18;
+  mix-blend-mode: luminosity;
+  filter: grayscale(100%) contrast(1.25) brightness(1.5);
+  /* Vignette mask — bright at the blade zone, fades to transparent at all edges */
+  -webkit-mask-image:
+    radial-gradient(ellipse at 58% 42%,
+      rgba(0,0,0,0.95) 0%,
+      rgba(0,0,0,0.7)  28%,
+      rgba(0,0,0,0.3)  55%,
+      transparent      78%);
+  mask-image:
+    radial-gradient(ellipse at 58% 42%,
+      rgba(0,0,0,0.95) 0%,
+      rgba(0,0,0,0.7)  28%,
+      rgba(0,0,0,0.3)  55%,
+      transparent      78%);
+}
+/* On mobile — pull image up, reduce size, keep it suggestive not dominant */
+@media(max-width:900px) {
+  #hero-knife img {
+    right: -15%;
+    top: 30%;
+    transform: translateY(0) rotate(-10deg);
+    width: 90%;
+    opacity: 0.12;
+  }
+}
+
+/* ── Upgraded nav + footer orb ──
+   Now uses the actual ONE™ logo PNG.
+   border-radius:50% crops it to a circle.
+   object-fit:cover ensures clean fill at any size. */
+.nav-orb {
+  width: 38px; height: 38px; border-radius: 50%;
+  object-fit: cover; display: block;
+  border: 1.5px solid rgba(255,255,255,0.14);
+  box-shadow:
+    0 0 0 2px rgba(60,36,105,0.4),
+    0 0 18px rgba(60,36,105,0.55);
+  flex-shrink: 0;
 }
 
 .hero-left  { position: relative; z-index: 2; }
@@ -552,6 +616,17 @@ nav {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(72px, 13vw, 172px);
   line-height: 0.84; margin-bottom: 36px;
+  letter-spacing: 0.03em;
+}
+
+/* ™ breathing room inside large Bebas display type */
+.decl-headline .tm,
+.manifesto-truth .tm,
+.hero-headline .tm,
+.iq-headline .tm,
+.sec-headline .tm {
+  margin-left: 0.05em;
+  letter-spacing: 0;
 }
 
 .decl-method {
@@ -1168,10 +1243,10 @@ footer {
 .footer-orb-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
 .footer-orb {
   width: 34px; height: 34px; border-radius: 50%;
-  background: radial-gradient(circle at 36% 36%, var(--purple-lift), var(--purple-deep));
+  object-fit: cover; display: block;
   border: 1px solid rgba(255,255,255,0.1);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Bebas Neue', sans-serif; font-size: 12px; color: var(--white);
+  box-shadow: 0 0 14px rgba(60,36,105,0.4);
+  flex-shrink: 0;
 }
 .footer-wm {
   font-family: 'Barlow Condensed', sans-serif;
@@ -1501,7 +1576,7 @@ footer {
 <!-- ══ NAV ══ -->
 <nav>
   <a class="nav-left" href="#">
-    <div class="nav-orb">1</div>
+    <img src="Sharper-ONE_Logo-Symbol_app-icon_trans.png" alt="The Sharper ONE™" class="nav-orb">
     <div class="nav-wordmark">The Sharper <span class="o">ONE</span>™</div>
   </a>
   <ul class="nav-links">
@@ -1520,6 +1595,11 @@ footer {
 <section id="hero">
   <div id="hero-bg"></div>
   <div class="ghost">1</div>
+
+  <!-- Knife image layer — z:1, luminosity blend, vignette masked -->
+  <div id="hero-knife">
+    <img src="knife-hero.jpg" alt="">
+  </div>
 
   <div class="hero-left">
     <div class="hero-eyebrow">Parker · Hood · Johnson Counties</div>
@@ -2197,7 +2277,7 @@ footer {
   <div class="footer-inner">
     <div>
       <div class="footer-orb-row">
-        <div class="footer-orb">1</div>
+        <img src="Sharper-ONE_Logo-Symbol_app-icon_trans.png" alt="The Sharper ONE™" class="footer-orb">
         <div class="footer-wm">The Sharper <span class="o">ONE</span>™</div>
       </div>
       <div class="footer-tl">Edge. Restored.</div>
