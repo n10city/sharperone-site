@@ -4,58 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wall of Edge™ — The Sharper ONE™</title>
-<link rel="icon" type="image/png" href="/icons/Sharper-ONE_Logo-Symbol_app-icon_trans.png">
+<!-- Self-hosted fonts — TiO™ font policy: no Google Fonts CDN in any deployed file -->
+<link rel="stylesheet" href="/fonts/fonts.css">
 <style>
-  @font-face {
-    font-family: 'Bebas Neue';
-    src: url('/fonts/bebas-neue-v16-latin-regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Barlow Condensed';
-    src: url('/fonts/barlow-condensed-v13-latin-regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Barlow Condensed';
-    src: url('/fonts/barlow-condensed-v13-latin-600.woff2') format('woff2');
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Barlow Condensed';
-    src: url('/fonts/barlow-condensed-v13-latin-700.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Barlow';
-    src: url('/fonts/barlow-v13-latin-regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Barlow';
-    src: url('/fonts/barlow-v13-latin-italic.woff2') format('woff2');
-    font-weight: 400;
-    font-style: italic;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Barlow';
-    src: url('/fonts/barlow-v13-latin-600.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }
-
   :root {
     --purple: #3C2469;
     --purple-mid: #5a3a8e;
@@ -103,18 +54,15 @@
     text-decoration: none;
   }
   .nav-orb {
-    width: 36px; height: 36px;
+    width: 32px; height: 32px;
     border-radius: 50%;
-    background: transparent;
-    border: 2.5px solid var(--orange);
+    background: var(--orange);
     display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: white;
+    letter-spacing: 0.02em;
     flex-shrink: 0;
-    overflow: hidden;
-    animation: orbPulse 3s ease-in-out infinite;
-  }
-  @keyframes orbPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(255,85,0,0.45); }
-    50%       { box-shadow: 0 0 0 6px rgba(255,85,0,0); }
   }
   .nav-title {
     font-family: var(--font-ui);
@@ -893,9 +841,7 @@
 <!-- NAV -->
 <nav class="nav">
   <a class="nav-brand" href="https://sharper.one">
-    <div class="nav-orb">
-      <img src="/icons/Sharper-ONE_Logo-Symbol_app-icon_trans.png" alt="The Sharper ONE™" style="width:30px;height:30px;object-fit:contain;display:block;border-radius:50%;">
-    </div>
+    <div class="nav-orb">1</div>
     <span class="nav-title">The Sharper ONE™</span>
   </a>
   <div class="nav-actions">
@@ -1076,6 +1022,10 @@
 </div>
 
 <script>
+// ── OPERATOR MODE SECRET ──────────────────────────────────────────────────────
+// Must match $WOE_SECRET in entries.php
+const WOE_SECRET = 'sharper1edge';
+
 const STORAGE_KEY = 'woe_entries_v1';
 let entries = [];
 let currentFilter = 'all';
@@ -1083,7 +1033,29 @@ let internalMode = false;
 let generatedQuote = '';
 let photosData = { before: null, after: null };
 
-function load() {
+// ── SERVER-FIRST LOAD ─────────────────────────────────────────────────────────
+async function load() {
+  try {
+    const headers = { 'Content-Type': 'application/json' };
+    if (internalMode) {
+      headers['X-WOE-Mode'] = 'internal';
+      headers['X-WOE-Secret'] = WOE_SECRET;
+    }
+    const res = await fetch('/wall/entries.php', { headers });
+    if (!res.ok) throw new Error('Server error ' + res.status);
+    const data = await res.json();
+    entries = data.entries || [];
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); } catch(e) {}
+  } catch(err) {
+    console.warn('Wall: falling back to localStorage —', err.message);
+    loadFromLocal();
+  }
+  updateStats();
+  renderWall();
+  if (internalMode) renderInternal();
+}
+
+function loadFromLocal() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     entries = raw ? JSON.parse(raw) : seedData();
@@ -1092,6 +1064,21 @@ function load() {
 
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+}
+
+async function saveEntryToServer(entry) {
+  try {
+    const res = await fetch('/wall/submit.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(entry)
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error);
+    await load();
+  } catch(err) {
+    console.error('Save to server failed:', err);
+  }
 }
 
 function seedData() {
@@ -1149,7 +1136,6 @@ function toggleInternalMode() {
     badge.style.background = 'rgba(255,85,0,0.3)';
     addBtn.style.display = 'inline-block';
     panel.classList.add('visible');
-    renderInternal();
   } else {
     btn.classList.remove('active');
     badge.textContent = 'Public';
@@ -1157,7 +1143,8 @@ function toggleInternalMode() {
     addBtn.style.display = 'none';
     panel.classList.remove('visible');
   }
-  renderWall();
+  // Reload from server with correct mode headers
+  load();
 }
 
 function renderWall() {
@@ -1336,7 +1323,7 @@ function useGeneratedQuote() {
   }
 }
 
-function saveEntry() {
+async function saveEntry() {
   const name = document.getElementById('fName').value.trim() || 'Anonymous';
   const segment = document.getElementById('fSegment').value;
   const blade = document.getElementById('fBlade').value.trim();
@@ -1352,12 +1339,15 @@ function saveEntry() {
     before: photosData.before,
     after: photosData.after
   };
+  // Optimistic local update — UI responds immediately
   entries.unshift(entry);
   save();
   closeModal();
   renderWall();
   updateStats();
   if (internalMode) renderInternal();
+  // Then persist to server (reloads from server on success to get canonical state)
+  await saveEntryToServer(entry);
 }
 
 function exportJSON() {
@@ -1368,10 +1358,8 @@ function exportJSON() {
   a.click(); URL.revokeObjectURL(url);
 }
 
-// Init
+// Init — async server-first load
 load();
-updateStats();
-renderWall();
 </script>
 </body>
 </html>
