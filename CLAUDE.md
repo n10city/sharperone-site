@@ -311,3 +311,44 @@ Writing a deploy script and asking the operator to run it is the lesser path whe
 ### Login Refresh
 
 Claude Code sessions may require periodic `/login` refresh due to OAuth token expiry. This is expected behavior — not a failure. The operator re-authenticates and execution resumes. The cost is negligible relative to the efficiency gained.
+
+---
+
+## TempleForge™ Git Protocol
+
+*TiO™ Standard · Locked: 2026-03-22*
+
+### Branch Discipline
+
+- **Never commit directly to `main`.** All work lands on a session branch first.
+- Session branches are named: `session/YYYYMMDD-descriptor` (e.g. `session/20260322-git-protocol`)
+- Descriptor is lowercase, hyphen-separated, 2–5 words that identify the work done
+- One logical unit of work per session branch — do not bundle unrelated changes
+
+### The Workflow
+
+```bash
+git checkout main
+git pull                          # always pull before branching
+git checkout -b session/YYYYMMDD-descriptor
+# do the work
+git add <files>
+git commit -m "type: description"
+git checkout main
+git pull                          # pull again before merge in case main moved
+git merge session/YYYYMMDD-descriptor --no-ff
+git push
+```
+
+### Rules
+
+1. **Pull before push** — always. No exceptions. Diverged history is operator error.
+2. **No force-push to main** — if a force-push is ever needed, stop and assess. It means something went wrong upstream.
+3. **`--no-ff` on merge** — preserves session branch as a visible unit in the log. Do not squash session work into a single anonymous commit.
+4. **Commit messages follow the pattern:** `type: description — TempleForge context if needed`
+   - Types: `feat`, `fix`, `docs`, `style`, `refactor`, `deploy`, `chore`
+5. **Claude Code owns git operations.** The chat instance does not commit, push, or merge. It authors content and hands off to Claude Code for execution.
+
+### Branch Cleanup
+
+After a session branch is merged to `main` and pushed, it may be deleted locally. Remote branch deletion is optional — keeping recent session branches on origin is acceptable for audit trail purposes.
