@@ -224,4 +224,15 @@ When available, this is the standard. Write → run → deployed. No manual drag
 
 ---
 
+## Intake Customer Page — Required Fields (non-negotiable)
+
+Three fields must be present before `completeIntake()` advances:
+1. `S.firstName` — min 1 char
+2. `S.lastName` — min 1 char
+3. `S.phone` — 10 digits, always required regardless of consent selection
+
+Consent selection (text / email / none) determines notification channel only. It does not gate or waive the phone requirement.
+
+---
+
 *EST™ · The SomeBody™ Company · BiMKA™ · TiO™ Standard*
