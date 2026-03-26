@@ -1,0 +1,7 @@
+# Block direct access to flat JSON store
+<Files "entries.json">
+  Require all denied
+</Files>
+
+# photos/ subdir must remain publicly readable for <img src> rendering
+# (no rule needed here — deny is now scoped to entries.json only)

@@ -525,6 +525,23 @@
     display: inline-block;
   }
 
+  .thankyou-wall-btn {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 14px 28px;
+    background: var(--orange);
+    color: white;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.1s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .thankyou-wall-btn:hover { background: var(--orange-dim); }
+  .thankyou-wall-btn:active { transform: scale(0.97); }
+
   /* ── FOOTER BRAND ── */
   .brand-footer {
     margin-top: 3rem;
@@ -687,6 +704,7 @@
     <div class="thankyou-orb">🔱</div>
     <h2 class="thankyou-title">ON THE<br>WALL.</h2>
     <p class="thankyou-sub">Your edge is sealed. It'll inspire the next person who thinks their knife is just "good enough."</p>
+    <a href="https://sharper.one/wall/" class="thankyou-wall-btn">See It on the Wall →</a>
     <span class="thankyou-tag">Wall of Edge™ · The Sharper ONE™</span>
   </div>
 
@@ -735,19 +753,39 @@
 
   function handlePhoto(type, input) {
     if (!input.files || !input.files[0]) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      photoData[type] = ev.target.result;
-      const preview = document.getElementById(type + 'Preview');
-      const icon    = document.getElementById(type + 'Icon');
-      preview.src = ev.target.result;
-      preview.classList.add('show');
-      icon.style.display = 'none';
-    };
-    reader.readAsDataURL(input.files[0]);
+    // Store the raw File object for upload; show local preview immediately
+    photoData[type] = input.files[0];
+    const preview = document.getElementById(type + 'Preview');
+    const icon    = document.getElementById(type + 'Icon');
+    preview.src = URL.createObjectURL(input.files[0]);
+    preview.classList.add('show');
+    icon.style.display = 'none';
   }
 
-  function submitEntry() {
+  async function uploadPhotos(entryId) {
+    // Upload whichever photos were attached; returns { before_url, after_url }
+    const urls = { before_url: null, after_url: null };
+    const slots = ['before', 'after'].filter(s => photoData[s] instanceof File);
+    if (slots.length === 0) return urls;
+
+    const fd = new FormData();
+    fd.append('entry_id', entryId);
+    slots.forEach(s => fd.append(s, photoData[s], s + '.jpg'));
+
+    try {
+      const res = await fetch('/wall/upload.php', { method: 'POST', body: fd });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.before_url) urls.before_url = data.before_url;
+        if (data.after_url)  urls.after_url  = data.after_url;
+      }
+    } catch(e) {
+      // Photos failing silently is acceptable — entry still submits without them
+    }
+    return urls;
+  }
+
+  async function submitEntry() {
     const reaction = document.getElementById('reactionField').value.trim();
     if (!reaction) {
       document.getElementById('reactionField').focus();
@@ -766,47 +804,50 @@
     btn.disabled = true;
     spinner.classList.add('show');
 
-    // Simulate AI shaping (replace with real API call in production)
-    setTimeout(async () => {
-      const entry = {
-        id: 'woe_' + Date.now(),
-        name: nameVal,
-        segment: detectSegment(bladeVal),
-        blade: bladeVal,
-        quote: reaction,
-        date: new Date().toISOString().split('T')[0],
-        notes: '',
-        featured: false,
-        isPublic: consentMode !== 'none',
-        before: photoData.before,
-        after: photoData.after,
-        source: 'customer-capture'
-      };
+    const entryId = 'woe_' + Date.now();
 
-      // POST to server — persistent, cross-device
+    // 1. Upload photos first → get back server-side URLs
+    const photoUrls = await uploadPhotos(entryId);
+
+    // 2. Build entry with URL references (no base64)
+    const entry = {
+      id: entryId,
+      name: nameVal,
+      segment: detectSegment(bladeVal),
+      blade: bladeVal,
+      quote: reaction,
+      date: new Date().toISOString().split('T')[0],
+      notes: '',
+      featured: false,
+      isPublic: consentMode !== 'none',
+      before_url: photoUrls.before_url,
+      after_url:  photoUrls.after_url,
+      source: 'customer-capture'
+    };
+
+    // 3. POST entry to server — persistent, cross-device
+    try {
+      await fetch('/wall/submit.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry)
+      });
+    } catch(e) {
+      // Server unreachable — fallback to localStorage so customer never sees failure
       try {
-        await fetch('/wall/submit.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(entry)
-        });
-      } catch(e) {
-        // Server unreachable — fallback to localStorage so customer never sees failure
-        try {
-          const raw = localStorage.getItem(WOE_KEY);
-          const entries = raw ? JSON.parse(raw) : [];
-          entries.unshift(entry);
-          localStorage.setItem(WOE_KEY, JSON.stringify(entries));
-        } catch(e2) {}
-      }
+        const raw = localStorage.getItem(WOE_KEY);
+        const entries = raw ? JSON.parse(raw) : [];
+        entries.unshift(entry);
+        localStorage.setItem(WOE_KEY, JSON.stringify(entries));
+      } catch(e2) {}
+    }
 
-      // Show thank you
-      document.getElementById('formCard').style.display = 'none';
-      const ty = document.getElementById('thankyou');
-      ty.classList.add('show');
-      ty.style.opacity = '0';
-      ty.style.animation = 'fadeUp 0.6s ease forwards';
-    }, 900);
+    // Show thank you
+    document.getElementById('formCard').style.display = 'none';
+    const ty = document.getElementById('thankyou');
+    ty.classList.add('show');
+    ty.style.opacity = '0';
+    ty.style.animation = 'fadeUp 0.6s ease forwards';
   }
 
   function detectSegment(blade) {

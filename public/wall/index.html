@@ -833,6 +833,7 @@
     .nav { padding: 0 1rem; }
     .wall-container { padding: 1rem; }
     .nav-title { font-size: 13px; }
+    .filter-btn { font-size: 11px; padding: 14px 12px; }
   }
 </style>
 </head>
@@ -846,8 +847,7 @@
   </a>
   <div class="nav-actions">
     <span class="mode-badge" id="modeBadge">Public</span>
-    <button class="nav-btn ghost" id="internalToggle" onclick="toggleInternalMode()">Internal View</button>
-    <button class="nav-btn primary" id="addEntryBtn" onclick="openModal()" style="display:none;">+ Add Entry</button>
+<button class="nav-btn primary" id="addEntryBtn" onclick="openModal()" style="display:none;">+ Add Entry</button>
   </div>
 </nav>
 
@@ -876,13 +876,13 @@
 
 <!-- FILTER BAR -->
 <div class="filter-bar">
-  <button class="filter-btn active" data-filter="all" onclick="applyFilter('all', this)">All Edges</button>
-  <button class="filter-btn" data-filter="Homeowner" onclick="applyFilter('Homeowner', this)">Homeowners</button>
-  <button class="filter-btn" data-filter="Restaurant" onclick="applyFilter('Restaurant', this)">Restaurants</button>
-  <button class="filter-btn" data-filter="Barber" onclick="applyFilter('Barber', this)">Barbers</button>
-  <button class="filter-btn" data-filter="Landscaper" onclick="applyFilter('Landscaper', this)">Landscapers</button>
-  <button class="filter-btn" data-filter="Hobbyist" onclick="applyFilter('Hobbyist', this)">Hobbyists</button>
-  <button class="filter-btn" data-filter="Trade" onclick="applyFilter('Trade', this)">Trade</button>
+  <button class="filter-btn active" data-filter="all" onclick="applyFilter('all', this)">Every LiFE™</button>
+  <button class="filter-btn" data-filter="Homeowner" onclick="applyFilter('Homeowner', this)">The HomeLiFE™</button>
+  <button class="filter-btn" data-filter="Restaurant" onclick="applyFilter('Restaurant', this)">The Craft</button>
+  <button class="filter-btn" data-filter="Barber" onclick="applyFilter('Barber', this)">The Ritual</button>
+  <button class="filter-btn" data-filter="Landscaper" onclick="applyFilter('Landscaper', this)">The Field</button>
+  <button class="filter-btn" data-filter="Hobbyist" onclick="applyFilter('Hobbyist', this)">The Passion</button>
+  <button class="filter-btn" data-filter="Trade" onclick="applyFilter('Trade', this)">The Account</button>
 </div>
 
 <!-- WALL GRID -->
@@ -950,12 +950,12 @@
         <div class="form-group">
           <label class="form-label">Segment</label>
           <select class="form-select" id="fSegment">
-            <option value="Homeowner">Homeowner</option>
-            <option value="Restaurant">Restaurant</option>
-            <option value="Barber">Barber</option>
-            <option value="Landscaper">Landscaper</option>
-            <option value="Hobbyist">Hobbyist</option>
-            <option value="Trade">Trade</option>
+            <option value="Homeowner">HomeLiFE™</option>
+            <option value="Restaurant">The Craft</option>
+            <option value="Barber">The Ritual</option>
+            <option value="Landscaper">The Field</option>
+            <option value="Hobbyist">The Passion</option>
+            <option value="Trade">The Account</option>
           </select>
         </div>
       </div>
@@ -1167,14 +1167,14 @@ function cardHTML(e) {
   const featured = e.featured ? 'featured' : '';
   const photoStripClass = e.featured ? 'photo-strip featured' : 'photo-strip';
 
-  const beforeImg = e.before
-    ? `<img src="${e.before}" alt="Before">`
+  const beforeImg = e.before_url
+    ? `<img src="${e.before_url}" alt="Before">`
     : `<div class="photo-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div><span class="photo-placeholder-text">Before</span>`;
-  const afterImg = e.after
-    ? `<img src="${e.after}" alt="After">`
+  const afterImg = e.after_url
+    ? `<img src="${e.after_url}" alt="After">`
     : `<div class="photo-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div><span class="photo-placeholder-text">After</span>`;
-  const beforeClass = e.before ? 'photo-half' : 'photo-half no-photo';
-  const afterClass = e.after ? 'photo-half' : 'photo-half no-photo';
+  const beforeClass = e.before_url ? 'photo-half' : 'photo-half no-photo';
+  const afterClass = e.after_url ? 'photo-half' : 'photo-half no-photo';
 
   const internalSection = internalMode && e.notes
     ? `<div class="internal-indicator"><span>⬡</span> Ops Notes</div>

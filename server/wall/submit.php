@@ -71,16 +71,26 @@ $clean = [
     'notes'    => '',           // Only operator-assigned via Wall internal mode
     'featured' => false,        // Only operator-flagged via Wall internal mode
     'isPublic' => isset($entry['isPublic']) ? (bool)$entry['isPublic'] : true,
-    'source'   => 'customer-capture',
-    'before'   => null,         // Photos handled via separate upload endpoint (future)
-    'after'    => null,
+    'source'     => 'customer-capture',
+    'before_url' => null,
+    'after_url'  => null,
 ];
 
-// ── PHOTO HANDLING ────────────────────────────────────────────────────────────
-// Base64 photos from edge.html are stripped here to protect server storage.
-// Future: wire a dedicated photo upload endpoint that stores to /data/photos/
-// and returns a URL — then store the URL here instead of base64.
-// For now: photos stored in entry are null; wall shows placeholder.
+// ── PHOTO URL HANDLING ────────────────────────────────────────────────────────
+// upload.php handles multipart image upload and returns paths under /wall/data/photos/.
+// The client POSTs images there first, then includes the returned URLs here.
+// Accept before_url / after_url as plain strings; reject anything that isn't
+// a relative path under /wall/data/photos/ to prevent open redirect / injection.
+foreach (['before', 'after'] as $slot) {
+    $url_key = $slot . '_url';
+    if (!empty($entry[$url_key])) {
+        $url = trim($entry[$url_key]);
+        // Only allow relative paths we own
+        if (preg_match('#^/wall/data/photos/woe_[a-zA-Z0-9_]+/(before|after)\.jpg$#', $url)) {
+            $clean[$url_key] = $url;
+        }
+    }
+}
 
 // ── LOAD + APPEND + SAVE ──────────────────────────────────────────────────────
 if (!is_dir($DATA_DIR)) {
