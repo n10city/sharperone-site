@@ -847,6 +847,7 @@
   </a>
   <div class="nav-actions">
     <span class="mode-badge" id="modeBadge">Public</span>
+    <button class="nav-btn ghost" id="tableToggle" onclick="toggleTable()" style="display:none;">Table View</button>
 <button class="nav-btn primary" id="addEntryBtn" onclick="openModal()" style="display:none;">+ Add Entry</button>
   </div>
 </nav>
@@ -893,6 +894,14 @@
 <!-- INTERNAL FEED PANEL -->
 <div class="internal-panel" id="internalPanel">
   <p class="internal-panel-title">INTERNAL FEED — ALL ENTRIES</p>
+  <div id="tableFilterBar" style="margin-bottom:1rem;display:flex;gap:8px;flex-wrap:wrap;">
+    <button class="filter-btn active" onclick="filterTable('all',this)">All</button>
+    <button class="filter-btn" onclick="filterTable('Homeowner',this)">The HomeLiFE™</button>
+    <button class="filter-btn" onclick="filterTable('Restaurant',this)">The Account</button>
+    <button class="filter-btn" onclick="filterTable('Landscaper',this)">The Field</button>
+    <button class="filter-btn" onclick="filterTable('Barber',this)">The Ritual</button>
+    <button class="filter-btn" onclick="filterTable('Hobbyist',this)">The Passion</button>
+  </div>
   <button class="internal-export-btn" onclick="exportJSON()">Export JSON</button>
   <div style="overflow-x:auto;">
     <table class="internal-table" id="internalTable">
@@ -1033,6 +1042,12 @@ let internalMode = false;
 let generatedQuote = '';
 let photosData = { before: null, after: null };
 
+// Auto-enable internal mode via URL param
+const _params = new URLSearchParams(window.location.search);
+if (_params.get('mode') === 'internal' && _params.get('secret') === WOE_SECRET) {
+  internalMode = true;
+}
+
 // ── SERVER-FIRST LOAD ─────────────────────────────────────────────────────────
 async function load() {
   try {
@@ -1052,7 +1067,11 @@ async function load() {
   }
   updateStats();
   renderWall();
-  if (internalMode) renderInternal();
+  if (internalMode) {
+    document.getElementById('tableToggle').style.display = '';
+    document.getElementById('addEntryBtn').style.display = '';
+    renderInternal();
+  }
 }
 
 function loadFromLocal() {
@@ -1147,6 +1166,22 @@ function toggleInternalMode() {
   load();
 }
 
+let tableVisible = false;
+function toggleTable() {
+  tableVisible = !tableVisible;
+  document.getElementById('internalPanel').classList.toggle('visible', tableVisible);
+  document.getElementById('tableToggle').textContent = tableVisible ? 'Card View' : 'Table View';
+}
+
+let tableFilter = 'all';
+function filterTable(segment, btn) {
+  tableFilter = segment;
+  document.querySelectorAll('#tableFilterBar .filter-btn')
+    .forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderInternal();
+}
+
 function renderWall() {
   const grid = document.getElementById('wallGrid');
   let filtered = entries.filter(e => {
@@ -1215,7 +1250,10 @@ function cardHTML(e) {
 function renderInternal() {
   const tbody = document.getElementById('internalTableBody');
   if (!entries.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#aaa;padding:2rem;">No entries yet.</td></tr>'; return; }
-  tbody.innerHTML = entries.map(e => `
+  const filtered = tableFilter === 'all'
+    ? entries
+    : entries.filter(e => e.segment === tableFilter);
+  tbody.innerHTML = filtered.map(e => `
     <tr>
       <td>${e.date||'—'}</td>
       <td>${e.name}</td>
@@ -1228,8 +1266,18 @@ function renderInternal() {
     </tr>`).join('');
 }
 
-function deleteEntry(id) {
+async function deleteEntry(id) {
   if (!confirm('Remove this entry from the Wall?')) return;
+  try {
+    await fetch('/wall/delete.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WOE-Secret': WOE_SECRET
+      },
+      body: JSON.stringify({ id })
+    });
+  } catch(e) { console.warn('Server delete failed:', e); }
   entries = entries.filter(e => e.id !== id);
   save();
   renderWall();
