@@ -157,6 +157,14 @@ nav {
   color: rgba(240,236,232,0.3); text-decoration: none; transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--white); }
+.nav-wall-link {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(240,236,232,0.3); text-decoration: none; transition: color 0.2s;
+  margin-right: 8px;
+}
+.nav-wall-link:hover { color: var(--white); }
+@media(max-width:560px) { .nav-wall-link { display: none; } }
 .nav-cta {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 11px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
@@ -1585,6 +1593,7 @@ footer {
     <li><a href="#visit">Come By</a></li>
     <li><a href="#sec">Lock My Rate</a></li>
   </ul>
+  <a href="https://sharper.one/wall/" class="nav-wall-link">Wall of Edge™</a>
   <a href="#sec" class="nav-cta">Lock My Rate</a>
 </nav>
 
@@ -2293,6 +2302,8 @@ footer {
       <div class="footer-social">
         <a href="https://nextdoor.com" target="_blank" rel="noopener">Nextdoor</a>
         <a href="https://facebook.com/itsthesharper.one" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://sharper.one/legal/">Legal</a>
+        <a href="https://sharper.one/wall/">Wall of Edge™</a>
       </div>
       <div class="footer-copy">© 2026 The Sharper ONE™ — All Rights Reserved.</div>
     </div>
