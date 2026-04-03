@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal | The Sharper ONE™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700;800&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --purple:       #3C2469;
+  --purple-deep:  #1a0f3d;
+  --blue-deep:    #080f2c;
+  --blue-mid:     #0e1d45;
+  --orange:       #ff5500;
+  --orange-soft:  #ff7733;
+  --white:        #ffffff;
+  --off-white:    #f0ece8;
+  --dark:         #050410;
+  --dark-mid:     #09071a;
+  --dark-panel:   #070614;
+  --ink:          #100e20;
+  --muted:        rgba(240,236,232,0.48);
+  --muted-strong: rgba(240,236,232,0.75);
+  --line:         rgba(255,255,255,0.06);
+  --line-warm:    rgba(255,85,0,0.15);
+  --blue-hint:    #7aadff;
+  --grad-orange:  linear-gradient(135deg,#ff5500 0%,#c43a8f 40%,#7a4fff 80%,#4a8fff 100%);
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-ui:      'Barlow Condensed', sans-serif;
+  --font-body:    'Barlow', sans-serif;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body {
+  background: var(--dark);
+  color: var(--off-white);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* grain */
+body::before {
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:0.28;mix-blend-mode:overlay;
+}
+
+/* NAV */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(5,4,16,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: 0.06em;
+  color: var(--off-white);
+  text-decoration: none;
+}
+.nav-brand span {
+  background: var(--grad-orange);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-back {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: var(--orange); }
+
+/* HERO */
+.hero {
+  padding: 72px 24px 48px;
+  max-width: 760px; margin: 0 auto;
+  border-bottom: 1px solid var(--line);
+}
+.hero-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 16px;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 8vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  color: var(--off-white);
+  margin-bottom: 20px;
+}
+.hero-title span {
+  background: var(--grad-orange);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.6;
+}
+.effective-date {
+  margin-top: 16px;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(240,236,232,0.3);
+}
+
+/* JUMP NAV */
+.jump-nav {
+  max-width: 760px; margin: 0 auto;
+  padding: 32px 24px;
+  display: flex; gap: 12px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--line);
+}
+.jump-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-strong);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.jump-btn:hover {
+  background: rgba(255,85,0,0.08);
+  border-color: rgba(255,85,0,0.3);
+  color: var(--off-white);
+}
+.jump-btn .num {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--orange);
+}
+
+/* CONTENT AREA */
+.content {
+  max-width: 760px; margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* SECTION */
+.doc-section {
+  padding: 64px 0 48px;
+  border-bottom: 1px solid var(--line);
+}
+.doc-section:last-child { border-bottom: none; }
+
+.section-number {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  color: var(--orange);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--off-white);
+  margin-bottom: 8px;
+}
+.section-sub {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: rgba(240,236,232,0.22);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 36px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line-warm);
+  user-select: none;
+  transition: color 0.4s;
+}
+.section-sub:hover {
+  color: rgba(240,236,232,0.42);
+}
+
+/* ARTICLE BODY */
+.doc-body {
+  color: rgba(240,236,232,0.75);
+  font-size: 0.97rem;
+  line-height: 1.75;
+}
+.doc-body h3 {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange-soft);
+  margin: 36px 0 10px;
+}
+.doc-body p { margin-bottom: 16px; }
+.doc-body p:last-child { margin-bottom: 0; }
+.doc-body ul {
+  padding-left: 0;
+  list-style: none;
+  margin-bottom: 16px;
+}
+.doc-body ul li {
+  padding: 6px 0 6px 20px;
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.doc-body ul li::before {
+  content: '—';
+  position: absolute; left: 0;
+  color: var(--orange);
+  font-size: 0.8rem;
+}
+.doc-body a {
+  color: var(--blue-hint);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* WAIVER CALLOUT — the operative box */
+.waiver-box {
+  margin: 36px 0;
+  padding: 28px 28px 24px;
+  background: rgba(255,85,0,0.05);
+  border: 1px solid rgba(255,85,0,0.2);
+  border-left: 3px solid var(--orange);
+  border-radius: 8px;
+}
+.waiver-box-label {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 12px;
+}
+.waiver-box p {
+  font-size: 0.95rem;
+  color: var(--off-white);
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+/* GOOD FAITH NOTE */
+.good-faith {
+  margin: 32px 0;
+  padding: 24px;
+  background: rgba(122,173,255,0.04);
+  border: 1px solid rgba(122,173,255,0.1);
+  border-radius: 8px;
+}
+.good-faith p {
+  font-size: 0.92rem;
+  font-style: italic;
+  color: rgba(240,236,232,0.55);
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+/* FOOTER */
+.legal-footer {
+  max-width: 760px; margin: 0 auto;
+  padding: 40px 24px 60px;
+  display: flex; flex-direction: column; gap: 16px;
+  border-top: 1px solid var(--line);
+}
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+  color: rgba(240,236,232,0.3);
+}
+.footer-contact {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: rgba(240,236,232,0.25);
+}
+.footer-contact a { color: var(--blue-hint); text-decoration: none; }
+.footer-tagline {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,85,0,0.4);
+}
+
+/* BACK™ BUTTON */
+.back-btn {
+  position: fixed;
+  bottom: 32px; right: 28px;
+  z-index: 200;
+  background: rgba(5,4,16,0.85);
+  border: 1px solid rgba(255,85,0,0.25);
+  border-radius: 8px;
+  padding: 11px 16px;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  color: rgba(240,236,232,0.55);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: opacity 0.35s, color 0.2s, border-color 0.2s, transform 0.2s;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 56px; min-height: 48px;
+}
+.back-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.back-btn:hover {
+  color: var(--orange);
+  border-color: rgba(255,85,0,0.55);
+  transform: translateY(-2px);
+}
+.back-btn:active { transform: translateY(0); }
+
+/* BEGIN AGAIN™ INSCRIPTION */
+.begin-again-wrap {
+  max-width: 760px; margin: 0 auto;
+  padding: 0 24px;
+}
+.begin-again-inscription {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 300;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: rgba(240,236,232,0.13);
+  text-align: center;
+  padding: 32px 0 28px;
+  line-height: 1;
+  user-select: none;
+  transition: color 0.4s;
+}
+.begin-again-inscription:hover {
+  color: rgba(240,236,232,0.28);
+}
+.begin-again-rule {
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+}
+
+@media(max-width:600px){
+  .begin-again-inscription { letter-spacing: 0.18em; font-size: 0.65rem; }
+  .back-btn { bottom: 20px; right: 16px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="https://sharper.one" class="nav-brand">The Sharper <span>ONE™</span></a>
+  <a href="https://sharper.one" class="nav-back">← Back to Home</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">The Sharper ONE™ · Legal</div>
+  <h1 class="hero-title">Terms.<br><span>Privacy.</span><br>Waiver.</h1>
+  <p class="hero-sub">Plain language. No traps. We operate with good conscience and expect the same. Here's what that looks like in writing.</p>
+  <div class="effective-date">Effective Date: March 29, 2026 · Parker / Hood / Johnson Counties, TX</div>
+</section>
+
+<!-- JUMP NAV -->
+<nav class="jump-nav" aria-label="Document sections">
+  <a href="#terms" class="jump-btn"><span class="num">01</span> Terms of Service</a>
+  <a href="#privacy" class="jump-btn"><span class="num">02</span> Privacy Policy</a>
+  <a href="#waiver" class="jump-btn"><span class="num">03</span> Service Liability Waiver</a>
+  <a href="#wall" class="jump-btn"><span class="num">04</span> Wall of Edge™</a>
+</nav>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- ══ 01 · TERMS OF SERVICE ══ -->
+  <section id="terms" class="doc-section">
+    <div class="section-number">01</div>
+    <h2 class="section-title">Terms of Service</h2>
+    <div class="section-sub">The rules of engagement — kept human</div>
+
+    <div class="doc-body">
+      <h3>Who We Are</h3>
+      <p>The Sharper ONE™ is a mobile blade and tool sharpening service operating in Parker, Hood, and Johnson Counties, Texas (DFW Metroplex), under the trade name <strong>The Sharper ONE™</strong>. We operate pop-up sessions, take walk-up orders, accept scheduled drop-off and batch service requests, and provide sharpening services for residential, professional, and commercial customers.</p>
+
+      <h3>What You're Agreeing To</h3>
+      <p>By using our intake system, submitting items for service, making payment, or interacting with our website or staff, you agree to these Terms. If you don't agree, don't use the service. It's that simple.</p>
+
+      <h3>Services Provided</h3>
+      <p>We sharpen and restore edges on knives, scissors, shears, garden tools, trade blades, and select specialty items. We reserve the right to decline any item we determine cannot be safely or effectively serviced — including but not limited to: items with severe structural damage, recalled items, items of disputed ownership, or materials outside our equipment's capabilities. We will tell you plainly if we can't help.</p>
+
+      <h3>Pricing</h3>
+      <p>Pricing is flat-rate per blade. Our published rates are final — no negotiation, no exceptions, no "deal" pricing that undermines the integrity of the work. Every edge gets the same attention regardless of price point. If our pricing doesn't work for you, we respect that.</p>
+
+      <h3>Turnaround</h3>
+      <p>Most walk-up service is same-session. Batch and trade orders are quoted at intake with an estimated turnaround. We communicate proactively if anything changes. We never hold your items beyond the agreed window without notice.</p>
+
+      <h3>Customer Responsibilities</h3>
+      <ul>
+        <li>Present items safely — wrapped, bagged, or in a secure container. Loose blades are a hazard to you and our team.</li>
+        <li>Disclose any known damage, fragility, or special handling requirements at intake — not after.</li>
+        <li>Provide accurate contact information so we can reach you when your order is ready.</li>
+        <li>Pick up items within the agreed window. Unclaimed items held beyond 14 days may be considered abandoned.</li>
+      </ul>
+
+      <h3>Payment</h3>
+      <p>Payment is due at pickup or at service completion. We accept card (tap/chip), digital payment, and cash. Membership fees are governed separately by SEC™ membership terms. No refunds for services rendered — but if something isn't right, we'll make it right. That's a promise, not a policy.</p>
+
+      <h3>Disputes</h3>
+      <p>We want to resolve any issue directly and without friction. Contact us first at <a href="mailto:clarity@sharper.one">clarity@sharper.one</a> or 877.926.9326. We commit to a response within 2 business days. If a dispute cannot be resolved, it shall be governed by the laws of the State of Texas, venue in Parker County.</p>
+
+      <h3>Changes to Terms</h3>
+      <p>We may update these terms. The current version always lives at <a href="https://sharper.one/legal/#terms">sharper.one/legal/#terms</a>. Continued use of our service constitutes acceptance.</p>
+    </div>
+  </section>
+
+  <!-- ══ 02 · PRIVACY POLICY ══ -->
+  <section id="privacy" class="doc-section">
+    <div class="section-number">02</div>
+    <h2 class="section-title">Privacy Policy</h2>
+    <div class="section-sub">Your information stays yours</div>
+
+    <div class="doc-body">
+      <h3>What We Collect</h3>
+      <p>We collect only what we need to do the job:</p>
+      <ul>
+        <li>Name (first name + last initial at minimum)</li>
+        <li>Phone number — required for order-ready notification, scheduling, and securing chain of custody of your items</li>
+        <li>Email address — only when you explicitly consent to email contact</li>
+        <li>Blade/item type and count — for service records</li>
+        <li>Optional: item photo — for condition documentation at intake</li>
+      </ul>
+
+      <h3>What We Don't Do With It</h3>
+      <ul>
+        <li>We do not sell your information. Ever.</li>
+        <li>We do not share your data with third parties for marketing purposes.</li>
+        <li>We do not build profiles beyond what's needed to serve you.</li>
+        <li>We do not store payment card data — transactions are processed through Square and Stripe's secure infrastructure.</li>
+      </ul>
+
+      <h3>How We Use It</h3>
+      <p>Your information is used solely for: fulfilling your order, notifying you when your items are ready, sending service-related communications you've consented to, and improving our operational systems. If you've joined the Edge Sharpening Club (SEC™), we may send you member updates and scheduling priority notices through the channel you selected.</p>
+
+      <h3>Retention</h3>
+      <p>Session records are retained for operational continuity and service history. You may request deletion of your data at any time by contacting us directly. We'll remove it promptly.</p>
+
+      <h3>Third-Party Services</h3>
+      <p>We use the following services in our operations, each governed by their own privacy policies:</p>
+      <ul>
+        <li>Square — payment processing</li>
+        <li>Brevo — email and SMS communications (consented channels only)</li>
+        <li>Our own hosted intake system at sharper.one — session data stored on our server</li>
+      </ul>
+
+      <h3>Contact for Privacy Matters</h3>
+      <p>Questions, corrections, or deletion requests: <a href="mailto:privacy@sharper.one">privacy@sharper.one</a> or 877.926.9326.</p>
+    </div>
+  </section>
+
+  <!-- ══ 03 · SERVICE LIABILITY WAIVER ══ -->
+  <section id="waiver" class="doc-section">
+    <div class="section-number">03</div>
+    <h2 class="section-title">Service Liability Waiver</h2>
+    <div class="section-sub">What we're responsible for — and what we're not</div>
+
+    <div class="doc-body">
+
+      <div class="waiver-box">
+        <div class="waiver-box-label">Core Release — Plain Language</div>
+        <p>By submitting items to The Sharper ONE™ for service, you acknowledge that sharpening is a permanent, material alteration of your blade or tool, and you release The Sharper ONE™ from liability for outcomes arising from pre-existing conditions, undisclosed damage, material limitations, or reasonable variation in sharpening result.</p>
+      </div>
+
+      <h3>Assumption of Risk</h3>
+      <p>Sharpening removes material. It is irreversible. A blade that is sharpened is fundamentally different — physically — from the blade you brought in. By submitting an item for service, you confirm that you understand and accept this, and that you have the authority to authorize the work.</p>
+
+      <h3>Pre-Existing Conditions</h3>
+      <p>The Sharper ONE™ is not liable for damage that existed before service began. This includes:</p>
+      <ul>
+        <li>Chips, cracks, fractures, or stress points in the blade or tool</li>
+        <li>Rust, corrosion, pitting, or previous improper sharpening</li>
+        <li>Structural weakness in handles, tangs, or tool bodies</li>
+        <li>Micro-damage not visible to the naked eye at intake</li>
+        <li>Any condition the customer cannot demonstrate was not present before service</li>
+      </ul>
+      <p>Our intake process includes documentation (photo and description) specifically to establish baseline condition. This protects you and us equally. If a condition is documented at intake, it is not our liability.</p>
+
+      <h3>Items We Sharpen With Caution</h3>
+      <p>Certain items carry elevated risk due to their nature. If you submit these items, you accept that risk:</p>
+      <ul>
+        <li><strong>Ceramic blades</strong> — highly brittle; may chip or fracture during sharpening. We will advise before proceeding.</li>
+        <li><strong>Heirloom, antique, or sentimental items</strong> — items with personal, historical, or irreplaceable value. We will sharpen them with care, but cannot guarantee outcome consistent with sentimental expectation. If the emotional value exceeds the functional purpose, we may recommend a specialist.</li>
+        <li><strong>Items with unusual geometry, damaged tips, or non-standard bevels</strong> — results may vary from factory specification.</li>
+        <li><strong>Items in severe disrepair</strong> — we may decline to service items that cannot be safely improved.</li>
+      </ul>
+
+      <h3>Scope of Our Liability</h3>
+      <p>If we make a verifiable error — meaning a condition that did not exist at intake and was caused by our direct action — our liability is limited to the service fee paid for that item. We will refund that fee in full, no argument required.</p>
+      <p>We do not accept liability for: consequential damages, sentimental value, business interruption, loss of use, or any claim that cannot be distinguished from pre-existing condition.</p>
+
+      <h3>Our Commitment in Return</h3>
+      <div class="good-faith">
+        <p>We operate in good conscience. That means we do not hide behind fine print when we're actually at fault. If we damage something through our own error, we own it and make it right — up to and including the refund of service fees. We do not take shortcuts. We do not sharpen items we know we cannot help. We treat every blade as if it matters — because to someone, it does.</p>
+      </div>
+
+      <h3>Acknowledgment</h3>
+      <p>By submitting your items through our intake system, completing payment, or otherwise engaging our services, you acknowledge that you have read, understood, and agreed to the terms of this waiver. Submission of your intake form constitutes acceptance. This waiver is part of the complete service agreement between you and The Sharper ONE™.</p>
+
+      <h3>Governing Law</h3>
+      <p>This waiver is governed by the laws of the State of Texas. Any dispute arising hereunder shall be resolved in Parker County, Texas.</p>
+
+    </div>
+  </section>
+
+  <section id="wall" class="doc-section">
+    <div class="section-number">04</div>
+    <h2 class="section-title">Wall of Edge™ — Submissions & Attribution</h2>
+    <div class="section-sub">Your story is yours. Here's how we handle it.</div>
+    <div class="doc-prose">
+
+      <h3>Customer-Submitted Stories</h3>
+      <p>When you submit a testimonial through <strong>sharper.one/edge/</strong>, you choose how your words appear: under your name, anonymously, or for internal use only. We honor that selection. You may request removal at any time by contacting us at <a href="mailto:srt@sharper.one">srt@sharper.one</a>.</p>
+
+      <h3>Operator-Captured Stories</h3>
+      <p>Occasionally we feature stories that customers shared publicly — in a social post, a review, a text, or a conversation — without submitting through our form. When we capture a story this way, we:</p>
+      <ul>
+        <li>Record confirmation that consent was given (verbal, written, or by public post)</li>
+        <li>Attribute the story using only the name or initial the customer shared publicly</li>
+        <li>Honor any request to remove or modify the entry promptly</li>
+      </ul>
+
+      <h3>Public Posts & Tags</h3>
+      <p>If you post publicly about The Sharper ONE™ on a social platform and tag or mention our business, we may feature your words on the Wall of Edge™. We will always represent your words accurately and identify the context. To request removal, contact us at <a href="mailto:srt@sharper.one">srt@sharper.one</a>.</p>
+
+      <h3>What We Don't Do</h3>
+      <p>We don't sell, license, or share your testimonial with third parties. We don't alter the meaning of your words. We don't use your story in paid advertising without separate written consent.</p>
+
+      <h3>Questions</h3>
+      <p>Reach us at <a href="mailto:srt@sharper.one">srt@sharper.one</a> or <a href="tel:8779269326">877.926.9326</a>.</p>
+
+    </div>
+  </section>
+
+</div><!-- /content -->
+
+<!-- BACK™ BUTTON -->
+<button class="back-btn" id="backBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Begin Again Comprehending Knowledge" aria-label="Back to top">
+  ↑ BACK™
+</button>
+
+<!-- BEGIN AGAIN™ INSCRIPTION -->
+<div class="begin-again-wrap">
+  <div class="begin-again-inscription">Begin Again™&nbsp;&nbsp;Comprehending&nbsp;&nbsp;Knowledge&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⨀&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BACK™</div>
+  <div class="begin-again-rule"></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="legal-footer">
+  <div class="footer-brand">The Sharper ONE™</div>
+  <div class="footer-contact">
+    877.926.9326 · <a href="mailto:get@sharper.one">get@sharper.one</a> · <a href="https://sharper.one">sharper.one</a>
+  </div>
+  <div class="footer-tagline">Every LiFE™ has a ONE™</div>
+</footer>
+
+</body>
+<script>
+const backBtn = document.getElementById('backBtn');
+window.addEventListener('scroll', () => {
+  backBtn.classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+</script>
+</html>
