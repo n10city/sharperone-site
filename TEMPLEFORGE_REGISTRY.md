@@ -24,7 +24,7 @@
 - **Host:** i2i.HOST · Vultr · IP: `155.138.200.125`
 - **Control Panel:** `engine.i2i.host` (Enhance)
 - **Web Root:** `/var/www/e1508a19-43fd-42c4-97a1-958e8b5e6763/public_html/`
-- **SSH Alias:** `sharper-one` (user `sharper_1`) · root via `moca-prod`
+- **SSH Alias:** `sharper-one` (user `sharper_1`) · root via `i2i-prime`
 - **Key:** `~/.ssh/sharper_one_deploy`
 
 **PROTECTED PATHS — NEVER OVERWRITE DURING UNRELATED DEPLOYS:**

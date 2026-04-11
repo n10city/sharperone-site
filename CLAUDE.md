@@ -110,7 +110,7 @@ This is a static Astro + Tailwind site (SSG, no React, no framework JS).
 
 **SSH aliases** (from `~/.ssh/config`):
 - `sharper-one` → `sharper_1@155.138.200.125` · key: `~/.ssh/sharper_one_deploy`
-- `moca-prod` → `root@155.138.200.125`
+- `i2i-prime` → `root@155.138.200.125` · key: `~/.ssh/i2i_prime_ops`
 
 **Web roots:**
 
@@ -119,7 +119,7 @@ This is a static Astro + Tailwind site (SSG, no React, no framework JS).
 | `public_html/` | `sharper.one` | Main site root |
 | `public_html/start/` | `sharper.one/start` | **SACRED — never touched during main site deploys** |
 | `public_html/intake/` | `sharper.one/intake` | SOIL™ operator page |
-| `public_html/intake-c/` | `sharper.one/intake-c` | SOIL™ customer page · **owned root:33 — use moca-prod for deploys** |
+| `public_html/intake-c/` | `sharper.one/intake-c` | SOIL™ customer page · **owned root:33 — use i2i-prime for deploys** |
 | `public_html/wall/` | `sharper.one/wall` | Wall of Edge™ |
 | `public_html/intake-photos/` | `sharper.one/intake-photos` | Blade photos · publicly accessible, token-named |
 | `ops.sharper.one/` | `ops.sharper.one` | Trade Pipeline Dashboard |
@@ -134,7 +134,7 @@ This is a static Astro + Tailwind site (SSG, no React, no framework JS).
 ## Security Hierarchy
 
 1. `sharper-one` (`sharper_1`) — default for all routine file ops and deploys
-2. `moca-prod` (root) — only when Enhance-level or file ownership requires it
+2. `i2i-prime` (root) — only when Enhance-level or file ownership requires it
 3. Never use root as the easy path. Least privilege is the standard.
 
 ---
