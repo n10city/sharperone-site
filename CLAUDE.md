@@ -235,4 +235,21 @@ Consent selection (text / email / none) determines notification channel only. It
 
 ---
 
+## CTS™ Artifact Inbox
+
+CTS™ artifacts saved from Claude Chat are staged at:
+  `D:\Downloads\_INBOX`  (WSL: `/mnt/d/Downloads/_INBOX`)
+
+At the start of any session involving CTS™ artifacts:
+1. Check `/mnt/d/Downloads/_INBOX` for unprocessed `.md` files
+2. For each `cts___*.md` file found:
+   - Confirm line 1 is: `type:: cts-artifact`
+   - Copy to Logseq pages: `/mnt/c/Users/mkali/OneDrive/MKs Logseq Workspace/pages/`
+   - Do NOT rename, do NOT edit content
+3. Report what was moved before proceeding with session work
+
+Do not auto-promote to wiki. Human deliberation required first.
+
+---
+
 *EST™ · The SomeBody™ Company · BiMKA™ · TiO™ Standard*
