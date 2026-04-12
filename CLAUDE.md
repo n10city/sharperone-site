@@ -253,3 +253,44 @@ Do not auto-promote to wiki. Human deliberation required first.
 ---
 
 *EST™ · The SomeBody™ Company · BiMKA™ · TiO™ Standard*
+
+## The Refinery™ — TempleForge™ Knowledge Pipeline
+
+The Refinery™ is the system by which raw session output (CTS™ artifacts, field notes,
+chat outputs) becomes permanent institutional wisdom in the WIKI. Every stage is a
+partner to iT™ — intentional Transformation in service of becoming better.
+
+The pipeline is designed to be a highly-automated digital affair, assisted by
+Artificial Memory and Assistive Intelligence — with human eyes and decisions
+intervening precisely and only where discernment is required.
+
+**The Five C's — in order:**
+
+| Stage | Name | Nature | The Work |
+|---|---|---|---|
+| 1 | **Create™** | Organic / emergent | The wisp. The glimpse. Kraft'n™ in earliest form — often nothing more than a vague reflection across minutes, hours, days, weeks, or months. |
+| 2 | **Crucible™** | Deliberate / BUILD™ | Fueled intention meets consistent contact. The unseen gets pressure-tested. What's real survives. Noise burns off. |
+| 3 | **Compile™** | Mechanical / automated | What survived gets collected, cleaned, and positioned. **The Drop™** executes here. |
+| 4 | **Condense™** | Human-led / AI-assisted | Human eyes and decisions intervene. Essence is elevated. Promotion to WIKI lives here. |
+| 5 | **Constitute™** | Structural / sovereign | WIKI receives it. Single source of truth. The new foundation of all that will come — To BE... |
+
+### The Drop™ — Stage 3 · Compile™ · Execution
+
+The Drop™ is the named act of moving a CTS™ artifact to its sovereign Logseq home.
+It is mechanical, automatable, and always called The Drop™ regardless of future form.
+
+```bash
+cp "[source path]" "/mnt/c/Users/mkali/OneDrive/MKs Logseq Workspace/pages/"
+```
+
+- Filename must carry `cts___` prefix
+- `type:: cts-artifact` must be line 1 of every artifact's properties block
+- Logseq namespace encoding: `___` in filename = `/` hierarchy
+- Confirm file landed before closing the session
+
+### iT™ Mandate
+
+The Refinery™ exists in service of iT™ — intentional Transformation.
+**To BE... To BE Better.** The mission remains incomplete | in progress.
+
+Full doctrine: `wiki/SYSTEMS/the-refinery.md` (pending Constitute stage)
