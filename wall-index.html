@@ -1,0 +1,1969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wall of Edge™ — The Sharper ONE™</title>
+<!-- Self-hosted fonts — TiO™ font policy: no Google Fonts CDN in any deployed file -->
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+  :root {
+    --purple: #3C2469;
+    --purple-mid: #5a3a8e;
+    --purple-light: #7c5ab8;
+    --orange: #ff5500;
+    --orange-dim: #cc4400;
+    --cream: #f5f0e8;
+    --ink: #1a1018;
+    --ink-mid: #3d2e4a;
+    --muted: #8a7a96;
+    --surface: #f9f6f2;
+    --card-bg: #ffffff;
+    --border: rgba(60,36,105,0.12);
+    --border-strong: rgba(60,36,105,0.25);
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-ui: 'Barlow Condensed', sans-serif;
+    --font-body: 'Barlow', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--surface);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    background: var(--purple);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .nav-orb {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: white;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+  .nav-title {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    font-size: 15px;
+    color: white;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .nav-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .nav-btn {
+    font-family: var(--font-ui);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .nav-btn.ghost {
+    background: transparent;
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .nav-btn.ghost:hover { background: rgba(255,255,255,0.08); color: white; }
+  .nav-btn.ghost.active { background: rgba(255,255,255,0.12); color: white; border-color: rgba(255,255,255,0.4); }
+  .nav-btn.primary {
+    background: var(--orange);
+    color: white;
+  }
+  .nav-btn.primary:hover { background: var(--orange-dim); }
+  .mode-badge {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    background: rgba(255,85,0,0.2);
+    color: var(--orange);
+    border: 1px solid rgba(255,85,0,0.3);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--purple);
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: 'EDGE';
+    position: absolute;
+    font-family: var(--font-display);
+    font-size: 22vw;
+    color: rgba(255,255,255,0.03);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1rem;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    color: white;
+    line-height: 0.9;
+    letter-spacing: 0.04em;
+    margin-bottom: 1rem;
+  }
+  .hero-title span { color: var(--orange); }
+  .hero-sub {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: rgba(255,255,255,0.55);
+    max-width: 480px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero-stat-num {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: white;
+    line-height: 1;
+  }
+  .hero-stat-label {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-top: 2px;
+  }
+  .hero-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.12);
+    align-self: center;
+  }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .filter-btn {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 14px 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .filter-btn:hover { color: var(--purple); }
+  .filter-btn.active { color: var(--purple); border-bottom-color: var(--orange); }
+
+  /* ── GRID ── */
+  .wall-container { padding: 2rem; }
+  .wall-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* ── ENTRY CARD ── */
+  .entry-card {
+    background: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .entry-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(60,36,105,0.1);
+  }
+  .entry-card.featured {
+    grid-column: span 2;
+    border-color: var(--orange);
+    border-width: 2px;
+  }
+  @media (max-width: 680px) {
+    .entry-card.featured { grid-column: span 1; }
+  }
+
+  /* Before/After Photo Strip */
+  .photo-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 180px;
+    position: relative;
+  }
+  .photo-strip.featured { height: 240px; }
+  .photo-half {
+    background: #e8e0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .photo-half img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-half.no-photo {
+    background: linear-gradient(135deg, #e8e0f0 0%, #f0e8f8 100%);
+    flex-direction: column;
+    gap: 6px;
+  }
+  .photo-placeholder-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(60,36,105,0.15);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .photo-placeholder-icon svg { width: 18px; height: 18px; fill: var(--purple-light); }
+  .photo-placeholder-text {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--purple-light);
+  }
+  .photo-label {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    font-family: var(--font-ui);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 2px;
+  }
+  .photo-label.before {
+    background: rgba(26,16,24,0.7);
+    color: rgba(255,255,255,0.8);
+  }
+  .photo-label.after {
+    background: var(--orange);
+    color: white;
+  }
+  .photo-divider {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: white;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+  .photo-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--orange);
+  }
+
+  /* Card Body */
+  .card-body { padding: 1rem; }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-family: var(--font-ui);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 2px;
+  }
+  .tag.segment { background: rgba(60,36,105,0.1); color: var(--purple); }
+  .tag.blade { background: rgba(255,85,0,0.1); color: var(--orange-dim); }
+  .tag.featured { background: var(--orange); color: white; }
+  .card-quote {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--ink-mid);
+    margin-bottom: 10px;
+    padding-left: 10px;
+    border-left: 2px solid var(--orange);
+  }
+  .card-blade-line {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 1rem;
+    border-top: 1px solid var(--border);
+    background: rgba(60,36,105,0.02);
+  }
+  .card-name {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .card-date {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    color: rgba(138,122,150,0.6);
+    letter-spacing: 0.04em;
+  }
+
+  /* Internal-only badge */
+  .internal-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    background: rgba(255,85,0,0.08);
+    border-left: 2px solid var(--orange);
+    font-family: var(--font-ui);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--orange-dim);
+  }
+  .internal-notes {
+    padding: 8px 1rem;
+    background: rgba(255,85,0,0.04);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--ink-mid);
+    border-top: 1px solid rgba(255,85,0,0.12);
+    display: none;
+  }
+  .internal-notes.visible { display: block; }
+
+  /* Delete btn (internal only) */
+  .delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: var(--muted);
+    opacity: 0.5;
+    transition: opacity 0.15s;
+    font-size: 14px;
+    line-height: 1;
+  }
+  .delete-btn:hover { opacity: 1; color: #c0392b; }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+  }
+  .empty-state-icon {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    color: rgba(60,36,105,0.08);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .empty-state p {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── ADD ENTRY MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,16,24,0.7);
+    z-index: 200;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 1rem;
+    overflow-y: auto;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 580px;
+    overflow: hidden;
+    margin: auto;
+  }
+  .modal-header {
+    background: var(--purple);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-header-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    color: white;
+    letter-spacing: 0.06em;
+  }
+  .modal-header-sub {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-top: 2px;
+  }
+  .modal-close {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: white;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.2); }
+  .modal-body { padding: 1.5rem; }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-label {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--purple);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 5px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: var(--surface);
+    transition: border-color 0.15s;
+    outline: none;
+    appearance: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--purple-light);
+    background: white;
+  }
+  .form-textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+  .form-hint {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* AI Assist Block */
+  .ai-block {
+    background: rgba(60,36,105,0.04);
+    border: 1.5px solid rgba(60,36,105,0.12);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  .ai-block-label {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--purple-light);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ai-spark {
+    width: 16px; height: 16px;
+    background: var(--orange);
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    color: white;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .ai-generate-btn {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: var(--purple);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    transition: background 0.15s;
+  }
+  .ai-generate-btn:hover { background: var(--purple-mid); }
+  .ai-generate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .ai-result {
+    margin-top: 10px;
+    padding: 10px;
+    background: white;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--ink-mid);
+    line-height: 1.55;
+    display: none;
+  }
+  .ai-result.visible { display: block; }
+  .ai-use-btn {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid var(--border-strong);
+    color: var(--purple);
+    padding: 5px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 8px;
+    display: none;
+    transition: all 0.15s;
+  }
+  .ai-use-btn.visible { display: inline-block; }
+  .ai-use-btn:hover { background: var(--purple); color: white; border-color: var(--purple); }
+
+  /* Photo Upload */
+  .photo-upload-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .photo-upload-zone {
+    border: 2px dashed var(--border-strong);
+    border-radius: 5px;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--surface);
+    position: relative;
+  }
+  .photo-upload-zone:hover { border-color: var(--purple-light); background: rgba(60,36,105,0.03); }
+  .photo-upload-zone input[type=file] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .photo-upload-label {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-top: 6px;
+  }
+  .photo-upload-preview {
+    width: 100%; height: 80px;
+    object-fit: cover;
+    border-radius: 3px;
+    margin-bottom: 4px;
+    display: none;
+  }
+  .photo-upload-preview.visible { display: block; }
+  .photo-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(60,36,105,0.08);
+    margin: 0 auto 4px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .photo-icon svg { width: 16px; height: 16px; fill: var(--purple-light); }
+
+  /* Toggle */
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+  }
+  .toggle-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+  }
+  .toggle {
+    width: 40px; height: 22px;
+    background: var(--border-strong);
+    border-radius: 11px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+    border: none;
+    flex-shrink: 0;
+  }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    width: 16px; height: 16px;
+    background: white;
+    border-radius: 50%;
+    top: 3px; left: 3px;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .toggle.on { background: var(--orange); }
+  .toggle.on::after { transform: translateX(18px); }
+
+  /* Modal Footer */
+  .modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    background: var(--surface);
+  }
+  .btn-cancel {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 9px 20px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px;
+    background: white;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-cancel:hover { color: var(--ink); border-color: var(--purple-light); }
+  .btn-save {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 9px 24px;
+    border: none;
+    border-radius: 4px;
+    background: var(--orange);
+    color: white;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-save:hover { background: var(--orange-dim); }
+
+  /* Loading spinner */
+  .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── INTERNAL PANEL ── */
+  .internal-panel {
+    background: white;
+    border-top: 2px solid var(--orange);
+    padding: 1.5rem 2rem;
+    display: none;
+  }
+  .internal-panel.visible { display: block; }
+  .internal-panel-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--purple);
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+  .internal-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+  }
+  .internal-table th {
+    font-family: var(--font-ui);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .internal-table td {
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-mid);
+    vertical-align: top;
+  }
+  .internal-table tr:hover td { background: rgba(60,36,105,0.02); }
+  .quote-cell { font-style: italic; }
+  .internal-export-btn {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px;
+    background: white;
+    color: var(--purple);
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 1rem;
+  }
+  .internal-export-btn:hover { background: var(--purple); color: white; border-color: var(--purple); }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .wall-grid { grid-template-columns: 1fr; }
+    .hero { padding: 2.5rem 1rem 2rem; }
+    .nav { padding: 0 1rem; }
+    .wall-container { padding: 1rem; }
+    .nav-title { font-size: 13px; }
+    .filter-btn { font-size: 11px; padding: 14px 12px; }
+  }
+
+/* ════════════════════════════════════════════
+   OPERATOR CAPTURE FORM
+   Internal mode only — source: operator-captured
+════════════════════════════════════════════ */
+.op-capture-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 980;
+  background: rgba(5,4,16,0.85);
+  backdrop-filter: blur(8px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.op-capture-overlay.open { display: flex; }
+
+.op-capture-modal {
+  background: #09071a;
+  border: 1px solid rgba(255,85,0,0.3);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 32px 28px;
+  position: relative;
+}
+.op-capture-modal h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.06em;
+  color: var(--orange);
+  margin-bottom: 4px;
+}
+.op-capture-modal .op-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 24px;
+}
+.op-capture-close {
+  position: absolute; top: 16px; right: 18px;
+  background: none; border: none;
+  font-size: 18px; color: rgba(255,255,255,0.3);
+  cursor: pointer; line-height: 1;
+  transition: color 0.15s;
+}
+.op-capture-close:hover { color: var(--orange); }
+
+.op-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.op-field-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,85,0,0.7);
+  margin-bottom: 5px;
+  display: block;
+}
+.op-field-label span {
+  color: rgba(255,255,255,0.2);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: none;
+  font-size: 9px;
+  margin-left: 6px;
+}
+.op-input, .op-textarea, .op-select {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 6px;
+  padding: 11px 14px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  color: #f0ece8;
+  -webkit-text-fill-color: #f0ece8;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+.op-input::placeholder, .op-textarea::placeholder { color: rgba(255,255,255,0.2); }
+.op-input:focus, .op-textarea:focus, .op-select:focus {
+  border-color: rgba(255,85,0,0.5);
+}
+.op-textarea { resize: vertical; min-height: 90px; line-height: 1.55; }
+.op-select option { background: #09071a; color: #f0ece8; }
+
+.op-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.op-consent-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.op-consent-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 100px;
+  background: transparent;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.op-consent-btn.selected {
+  background: rgba(255,85,0,0.12);
+  border-color: rgba(255,85,0,0.5);
+  color: var(--orange);
+}
+
+.op-checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: rgba(255,85,0,0.05);
+  border: 1px solid rgba(255,85,0,0.15);
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+.op-checkbox-row input[type="checkbox"] { margin-top: 2px; flex-shrink: 0; accent-color: var(--orange); }
+.op-checkbox-row label {
+  font-family: 'Barlow', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.5;
+  cursor: pointer;
+}
+.op-checkbox-row label strong { color: rgba(255,255,255,0.8); font-weight: 500; }
+
+.op-submit-btn {
+  width: 100%;
+  padding: 15px;
+  background: var(--orange);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  color: white;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.op-submit-btn:hover { background: #cc4400; }
+.op-submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.op-source-note {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.18);
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Photo zones — operator capture */
+.op-photo-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.op-photo-zone {
+  border: 1.5px dashed rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 1rem 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.2s, background 0.2s;
+  background: rgba(255,255,255,0.02);
+  overflow: hidden;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.op-photo-zone:hover { border-color: rgba(255,85,0,0.4); background: rgba(255,85,0,0.04); }
+.op-photo-zone.after  { border-color: rgba(255,85,0,0.25); }
+.op-photo-zone input {
+  position: absolute; inset: 0;
+  opacity: 0; cursor: pointer;
+  width: 100%; height: 100%;
+  z-index: 10;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.op-photo-preview {
+  width: 100%; height: 70px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 4px;
+  display: none;
+  pointer-events: none;
+}
+.op-photo-preview.show { display: block; }
+.op-photo-icon {
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+.op-photo-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 2px;
+  pointer-events: none;
+}
+.op-photo-zone.before .op-photo-label { color: rgba(255,255,255,0.4); }
+.op-photo-zone.after  .op-photo-label { color: var(--orange); }
+.op-photo-status {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 3px;
+  color: rgba(255,85,0,0.7);
+  display: none;
+  pointer-events: none;
+}
+.op-photo-status.show { display: block; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="https://sharper.one">
+    <img src="/icons/Sharper-ONE_Logo-Symbol_app-icon_trans.png" alt="The Sharper ONE™" class="nav-orb">
+    <span class="nav-title">The Sharper ONE™</span>
+  </a>
+  <div class="nav-actions">
+    <span class="mode-badge" id="modeBadge">Public</span>
+    <button class="nav-btn ghost" id="tableToggle" onclick="toggleTable()" style="display:none;">Table View</button>
+<button class="nav-btn primary" id="addEntryBtn" onclick="openOpCapture()" style="display:none;">+ Add Entry</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">The Sharper ONE™ · Parker, Hood & Johnson Counties</p>
+  <h1 class="hero-title">WALL OF <span>EDGE</span>™</h1>
+  <p class="hero-sub">Every blade has a story. These are the ones worth telling.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num" id="statTotal">0</span>
+      <span class="hero-stat-label">Blades Restored</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num" id="statSessions">0</span>
+      <span class="hero-stat-label">Sessions Run</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num" id="statSegments">—</span>
+      <span class="hero-stat-label">Top Segment</span>
+    </div>
+  </div>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all" onclick="applyFilter('all', this)">Every LiFE™</button>
+  <button class="filter-btn" data-filter="Homeowner" onclick="applyFilter('Homeowner', this)">The HomeLiFE™</button>
+  <button class="filter-btn" data-filter="Restaurant" onclick="applyFilter('Restaurant', this)">The Craft</button>
+  <button class="filter-btn" data-filter="Barber" onclick="applyFilter('Barber', this)">The Ritual</button>
+  <button class="filter-btn" data-filter="Landscaper" onclick="applyFilter('Landscaper', this)">The Field</button>
+  <button class="filter-btn" data-filter="Hobbyist" onclick="applyFilter('Hobbyist', this)">The Passion</button>
+  <button class="filter-btn" data-filter="Trade" onclick="applyFilter('Trade', this)">The Account</button>
+</div>
+
+<!-- WALL GRID -->
+<div class="wall-container">
+  <div class="wall-grid" id="wallGrid"></div>
+</div>
+
+<!-- INTERNAL FEED PANEL -->
+<div class="internal-panel" id="internalPanel">
+  <p class="internal-panel-title">INTERNAL FEED — ALL ENTRIES</p>
+  <div id="tableFilterBar" style="margin-bottom:1rem;display:flex;gap:8px;flex-wrap:wrap;">
+    <button class="filter-btn active" onclick="filterTable('all',this)">All</button>
+    <button class="filter-btn" onclick="filterTable('Homeowner',this)">The HomeLiFE™</button>
+    <button class="filter-btn" onclick="filterTable('Trade',this)">The Account</button>
+    <button class="filter-btn" onclick="filterTable('Landscaper',this)">The Field</button>
+    <button class="filter-btn" onclick="filterTable('Barber',this)">The Ritual</button>
+    <button class="filter-btn" onclick="filterTable('Hobbyist',this)">The Passion</button>
+  </div>
+  <button class="internal-export-btn" onclick="exportJSON()">Export JSON</button>
+  <div style="overflow-x:auto;">
+    <table class="internal-table" id="internalTable">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Segment</th>
+          <th>Blade</th>
+          <th>Quote</th>
+          <th>Notes</th>
+          <th>Public</th>
+          <th>Featured</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="internalTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ADD ENTRY MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-header-title">NEW EDGE ENTRY</div>
+        <div class="modal-header-sub">iQ™ Edge · AI-Assisted</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- AI ASSIST -->
+      <div class="ai-block">
+        <div class="ai-block-label">
+          <span class="ai-spark">AI</span>
+          iQ™ Edge Assist — Describe what happened
+        </div>
+        <textarea class="form-textarea" id="aiPrompt" placeholder="e.g. Homeowner came with a completely dull chef's knife, couldn't even cut tomatoes. Sharpened it on the 2x42, finished on the Work Sharp. She literally gasped when she tried it." style="min-height:70px;"></textarea>
+        <p class="form-hint">Describe the customer, the blade, the reaction. AI will shape it into a pull quote.</p>
+        <button class="ai-generate-btn" id="aiBtn" onclick="generateQuote()">
+          <span id="aiSpinner" class="spinner" style="display:none;"></span>
+          Generate Pull Quote
+        </button>
+        <div class="ai-result" id="aiResult"></div>
+        <button class="ai-use-btn" id="aiUseBtn" onclick="useGeneratedQuote()">Use This Quote →</button>
+      </div>
+
+      <!-- FORM FIELDS -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Customer Name</label>
+          <input class="form-input" id="fName" type="text" placeholder="First name or initials">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Segment</label>
+          <select class="form-select" id="fSegment">
+            <option value="Homeowner">HomeLiFE™</option>
+            <option value="Restaurant">The Craft</option>
+            <option value="Barber">The Ritual</option>
+            <option value="Landscaper">The Field</option>
+            <option value="Hobbyist">The Passion</option>
+            <option value="Trade">The Account</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Blade / Tool Type</label>
+          <input class="form-input" id="fBlade" type="text" placeholder="e.g. Chef's knife, straight razor">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Session Date</label>
+          <input class="form-input" id="fDate" type="date">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Pull Quote (Customer Reaction)</label>
+        <textarea class="form-textarea" id="fQuote" placeholder="What they said, how they reacted — in their words or captured in spirit" style="min-height:70px;"></textarea>
+      </div>
+
+      <!-- PHOTOS -->
+      <div class="form-group">
+        <label class="form-label">Before / After Photos</label>
+        <div class="photo-upload-row">
+          <div class="photo-upload-zone" id="beforeZone">
+            <input type="file" accept="image/*" onchange="handlePhoto('before', this)">
+            <img class="photo-upload-preview" id="beforePreview" src="" alt="">
+            <div class="photo-icon" id="beforeIcon">
+              <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+            </div>
+            <span class="photo-upload-label">Before</span>
+          </div>
+          <div class="photo-upload-zone" id="afterZone">
+            <input type="file" accept="image/*" onchange="handlePhoto('after', this)">
+            <img class="photo-upload-preview" id="afterPreview" src="" alt="">
+            <div class="photo-icon" id="afterIcon">
+              <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+            </div>
+            <span class="photo-upload-label">After</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERNAL NOTES -->
+      <div class="form-group">
+        <label class="form-label">Internal Notes</label>
+        <textarea class="form-textarea" id="fNotes" placeholder="Equipment used, grit progression, edge condition on arrival, anything ops-relevant" style="min-height:60px;"></textarea>
+        <p class="form-hint">Never shown publicly. Ops reference only.</p>
+      </div>
+
+      <!-- TOGGLES -->
+      <div class="toggle-row">
+        <span class="toggle-label">Mark as Featured</span>
+        <button class="toggle" id="toggleFeatured" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-label">Publish to Public Wall</span>
+        <button class="toggle on" id="togglePublic" onclick="this.classList.toggle('on')"></button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveEntry()">Seal the Edge 🔱</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── OPERATOR MODE SECRET ──────────────────────────────────────────────────────
+// Must match $WOE_SECRET in entries.php
+const WOE_SECRET = 'sharper1edge';
+
+const STORAGE_KEY = 'woe_entries_v1';
+let entries = [];
+let currentFilter = 'all';
+let internalMode = false;
+let generatedQuote = '';
+let photosData = { before: null, after: null };
+
+// Auto-enable internal mode via URL param
+const _params = new URLSearchParams(window.location.search);
+if (_params.get('mode') === 'internal' && _params.get('secret') === WOE_SECRET) {
+  internalMode = true;
+}
+
+// ── SERVER-FIRST LOAD ─────────────────────────────────────────────────────────
+async function load() {
+  try {
+    const headers = { 'Content-Type': 'application/json' };
+    if (internalMode) {
+      headers['X-WOE-Mode'] = 'internal';
+      headers['X-WOE-Secret'] = WOE_SECRET;
+    }
+    const res = await fetch('/wall/entries.php', { headers });
+    if (!res.ok) throw new Error('Server error ' + res.status);
+    const data = await res.json();
+    entries = data.entries || [];
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); } catch(e) {}
+  } catch(err) {
+    console.warn('Wall: falling back to localStorage —', err.message);
+    loadFromLocal();
+  }
+  updateStats();
+  renderWall();
+  if (internalMode) {
+    document.getElementById('tableToggle').style.display = '';
+    document.getElementById('addEntryBtn').style.display = '';
+    renderInternal();
+  }
+}
+
+function loadFromLocal() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    entries = raw ? JSON.parse(raw) : seedData();
+  } catch(e) { entries = seedData(); }
+}
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+}
+
+async function saveEntryToServer(entry) {
+  try {
+    const res = await fetch('/wall/submit.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(entry)
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error);
+    await load();
+  } catch(err) {
+    console.error('Save to server failed:', err);
+  }
+}
+
+function seedData() {
+  const d = [
+    {
+      id: 'woe_1', name: 'Maria T.', segment: 'Homeowner', blade: "Chef's Knife",
+      quote: "I've had this knife for 15 years and forgot what sharp felt like. I literally stood there and sliced the air. My husband thought something happened to me.",
+      notes: 'Arrived with a significant rolled edge. 2x42 at 120 grit → 220 → Work Sharp fine. Paper test clean first pass.', 
+      date: '2025-03-02', featured: true, isPublic: true, before: null, after: null
+    },
+    {
+      id: 'woe_2', name: 'DeShawn B.', segment: 'Barber', blade: 'Straight Razor',
+      quote: "Every barber in the shop is going to hear about this. That edge is surgical.",
+      notes: 'Dovo 5/8 — hollow grind, minor hone wear. Work Sharp with leather strop finish. BiP™ gap validated.',
+      date: '2025-03-09', featured: false, isPublic: true, before: null, after: null
+    },
+    {
+      id: 'woe_3', name: 'Jericho L.', segment: 'Landscaper', blade: 'Hedge Shears (3 pair)',
+      quote: "Usually takes my guys twice as long after blades go dull. Called me right from the site to order more.",
+      notes: 'Batch of 3 pairs — Fiskars and one no-name brand. 2x42 at 80 → 220, no strop needed. 9 blades total.',
+      date: '2025-03-16', featured: false, isPublic: true, before: null, after: null
+    }
+  ];
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
+  return d;
+}
+
+function updateStats() {
+  const total = entries.length;
+  const sessions = [...new Set(entries.map(e => e.date))].length;
+  const segCount = {};
+  entries.forEach(e => { segCount[e.segment] = (segCount[e.segment]||0)+1; });
+  const top = Object.entries(segCount).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statSessions').textContent = sessions;
+  document.getElementById('statSegments').textContent = top ? top[0].substring(0,4).toUpperCase() : '—';
+}
+
+function applyFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderWall();
+}
+
+function toggleInternalMode() {
+  internalMode = !internalMode;
+  const btn = document.getElementById('internalToggle');
+  const badge = document.getElementById('modeBadge');
+  const addBtn = document.getElementById('addEntryBtn');
+  const panel = document.getElementById('internalPanel');
+  if (internalMode) {
+    btn.classList.add('active');
+    badge.textContent = 'Internal';
+    badge.style.background = 'rgba(255,85,0,0.3)';
+    addBtn.style.display = 'inline-block';
+    panel.classList.add('visible');
+  } else {
+    btn.classList.remove('active');
+    badge.textContent = 'Public';
+    badge.style.background = 'rgba(255,85,0,0.2)';
+    addBtn.style.display = 'none';
+    panel.classList.remove('visible');
+  }
+  // Reload from server with correct mode headers
+  load();
+}
+
+let tableVisible = false;
+function toggleTable() {
+  tableVisible = !tableVisible;
+  document.getElementById('internalPanel').classList.toggle('visible', tableVisible);
+  document.getElementById('tableToggle').textContent = tableVisible ? 'Card View' : 'Table View';
+}
+
+let tableFilter = 'all';
+function filterTable(segment, btn) {
+  tableFilter = segment;
+  document.querySelectorAll('#tableFilterBar .filter-btn')
+    .forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderInternal();
+}
+
+function renderWall() {
+  const grid = document.getElementById('wallGrid');
+  let filtered = entries.filter(e => {
+    if (!internalMode && !e.isPublic) return false;
+    if (currentFilter !== 'all' && e.segment !== currentFilter) return false;
+    return true;
+  });
+  // Featured first
+  filtered.sort((a,b) => (b.featured?1:0)-(a.featured?1:0));
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">EDGE</div><p>No entries yet — seal the first one.</p></div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(e => cardHTML(e)).join('');
+}
+
+function cardHTML(e) {
+  const featured = e.featured ? 'featured' : '';
+  const photoStripClass = e.featured ? 'photo-strip featured' : 'photo-strip';
+
+  const beforeImg = e.before_url
+    ? `<img src="${e.before_url}" alt="Before">`
+    : `<div class="photo-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div><span class="photo-placeholder-text">Before</span>`;
+  const afterImg = e.after_url
+    ? `<img src="${e.after_url}" alt="After">`
+    : `<div class="photo-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div><span class="photo-placeholder-text">After</span>`;
+  const beforeClass = e.before_url ? 'photo-half' : 'photo-half no-photo';
+  const afterClass = e.after_url ? 'photo-half' : 'photo-half no-photo';
+
+  const internalSection = internalMode && e.notes
+    ? `<div class="internal-indicator"><span>⬡</span> Ops Notes</div>
+       <div class="internal-notes visible">${e.notes}</div>`
+    : '';
+  const deleteBtn = internalMode
+    ? `<button class="delete-btn" onclick="deleteEntry('${e.id}')" title="Delete">✕</button>`
+    : '';
+  const featuredTag = e.featured ? '<span class="tag featured">Featured</span>' : '';
+  const dateStr = e.date ? new Date(e.date+"T12:00:00").toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
+
+  return `
+  <div class="entry-card ${featured}" id="card_${e.id}">
+    <div class="${photoStripClass}">
+      <div class="${beforeClass}">${beforeImg}<span class="photo-label before">Before</span></div>
+      <div class="${afterClass}">${afterImg}<span class="photo-label after">After</span></div>
+      <div class="photo-divider"></div>
+    </div>
+    <div class="card-body">
+      <div class="card-meta">
+        ${featuredTag}
+        <span class="tag segment">${e.segment}</span>
+        <span class="tag blade">${e.blade}</span>
+      </div>
+      <p class="card-quote">${e.quote}</p>
+    </div>
+    ${internalSection}
+    <div class="card-footer">
+      <span class="card-name">${e.name}</span>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="card-date">${dateStr}</span>
+        ${deleteBtn}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderInternal() {
+  const tbody = document.getElementById('internalTableBody');
+  if (!entries.length) { tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#aaa;padding:2rem;">No entries yet.</td></tr>'; return; }
+  const filtered = tableFilter === 'all'
+    ? entries
+    : entries.filter(e => e.segment === tableFilter);
+  tbody.innerHTML = filtered.map(e => `
+    <tr>
+      <td>${e.date||'—'}</td>
+      <td>${e.name}</td>
+      <td><span class="tag segment" style="font-size:9px;">${e.segment}</span></td>
+      <td>${e.blade}</td>
+      <td class="quote-cell" style="max-width:200px;">${e.quote.substring(0,80)}${e.quote.length>80?'…':''}</td>
+      <td style="max-width:160px;font-size:0.8rem;color:#666;">${e.notes ? e.notes.substring(0,60)+'…' : '—'}</td>
+      <td>${e.isPublic ? '✓' : '—'}</td>
+      <td>
+        <button onclick="toggleFeatured('${e.id}', ${e.featured})"
+                style="background:none;border:none;cursor:pointer;font-size:1rem;"
+                title="${e.featured ? 'Remove featured' : 'Mark featured'}">
+          ${e.featured ? '★' : '☆'}
+        </button>
+      </td>
+      <td><button class="delete-btn" onclick="deleteEntry('${e.id}')">✕</button></td>
+    </tr>`).join('');
+}
+
+async function toggleFeatured(id, current) {
+  try {
+    await fetch('/wall/feature.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WOE-Secret': WOE_SECRET
+      },
+      body: JSON.stringify({ id, featured: !current })
+    });
+  } catch(e) { console.warn('Server feature toggle failed:', e); }
+  const entry = entries.find(e => e.id === id);
+  if (entry) entry.featured = !current;
+  save();
+  renderWall();
+  updateStats();
+  renderInternal();
+}
+
+async function deleteEntry(id) {
+  if (!confirm('Remove this entry from the Wall?')) return;
+  try {
+    await fetch('/wall/delete.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WOE-Secret': WOE_SECRET
+      },
+      body: JSON.stringify({ id })
+    });
+  } catch(e) { console.warn('Server delete failed:', e); }
+  entries = entries.filter(e => e.id !== id);
+  save();
+  renderWall();
+  updateStats();
+  if (internalMode) renderInternal();
+}
+
+function openModal() {
+  document.getElementById('modalOverlay').classList.add('open');
+  document.getElementById('fDate').value = new Date().toISOString().split('T')[0];
+  photosData = { before: null, after: null };
+  generatedQuote = '';
+  document.getElementById('aiResult').classList.remove('visible');
+  document.getElementById('aiUseBtn').classList.remove('visible');
+  document.getElementById('aiPrompt').value = '';
+  document.getElementById('fName').value = '';
+  document.getElementById('fSegment').value = 'Homeowner';
+  document.getElementById('fBlade').value = '';
+  document.getElementById('fQuote').value = '';
+  document.getElementById('fNotes').value = '';
+  document.getElementById('beforePreview').classList.remove('visible');
+  document.getElementById('afterPreview').classList.remove('visible');
+  document.getElementById('beforeIcon').style.display = 'flex';
+  document.getElementById('afterIcon').style.display = 'flex';
+  const tf = document.getElementById('toggleFeatured');
+  const tp = document.getElementById('togglePublic');
+  tf.classList.remove('on');
+  tp.classList.add('on');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function handlePhoto(type, input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    photosData[type] = ev.target.result;
+    const preview = document.getElementById(type + 'Preview');
+    const icon = document.getElementById(type + 'Icon');
+    preview.src = ev.target.result;
+    preview.classList.add('visible');
+    icon.style.display = 'none';
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+async function generateQuote() {
+  const prompt = document.getElementById('aiPrompt').value.trim();
+  if (!prompt) { alert('Describe the session first.'); return; }
+  const btn = document.getElementById('aiBtn');
+  const spinner = document.getElementById('aiSpinner');
+  const resultEl = document.getElementById('aiResult');
+  const useBtn = document.getElementById('aiUseBtn');
+  btn.disabled = true;
+  spinner.style.display = 'inline-block';
+  btn.childNodes[2].textContent = 'Generating...';
+  resultEl.classList.remove('visible');
+  useBtn.classList.remove('visible');
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `You are the voice of The Sharper ONE™, a mobile blade sharpening business in the Dallas-Fort Worth Metroplex. Your job is to take a raw session description from the operator and craft a short, powerful pull quote that captures the customer's reaction or the transformation moment. The quote should feel like something a real customer would say — conversational, vivid, genuine. Not marketing copy. 1-3 sentences maximum. First person if possible. Pure voice, no fluff. Return ONLY the quote text — no quotation marks, no preamble, no explanation.`,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content && data.content[0] ? data.content[0].text.trim() : 'Could not generate quote. Try again.';
+    generatedQuote = text;
+    resultEl.textContent = text;
+    resultEl.classList.add('visible');
+    useBtn.classList.add('visible');
+  } catch(err) {
+    resultEl.textContent = 'API error — enter quote manually.';
+    resultEl.classList.add('visible');
+  } finally {
+    btn.disabled = false;
+    spinner.style.display = 'none';
+    btn.childNodes[2].textContent = 'Generate Pull Quote';
+  }
+}
+
+function useGeneratedQuote() {
+  if (generatedQuote) {
+    document.getElementById('fQuote').value = generatedQuote;
+  }
+}
+
+async function saveEntry() {
+  const name = document.getElementById('fName').value.trim() || 'Anonymous';
+  const segment = document.getElementById('fSegment').value;
+  const blade = document.getElementById('fBlade').value.trim();
+  const quote = document.getElementById('fQuote').value.trim();
+  const date = document.getElementById('fDate').value;
+  const notes = document.getElementById('fNotes').value.trim();
+  const featured = document.getElementById('toggleFeatured').classList.contains('on');
+  const isPublic = document.getElementById('togglePublic').classList.contains('on');
+  if (!blade || !quote) { alert('Blade type and pull quote are required.'); return; }
+  const entry = {
+    id: 'woe_' + Date.now(),
+    name, segment, blade, quote, date, notes, featured, isPublic,
+    before: photosData.before,
+    after: photosData.after
+  };
+  // Optimistic local update — UI responds immediately
+  entries.unshift(entry);
+  save();
+  closeModal();
+  renderWall();
+  updateStats();
+  if (internalMode) renderInternal();
+  // Then persist to server (reloads from server on success to get canonical state)
+  await saveEntryToServer(entry);
+}
+
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(entries, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url;
+  a.download = 'wall-of-edge-export-' + new Date().toISOString().split('T')[0] + '.json';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+// Init — async server-first load
+load();
+
+/* ── Operator Capture ── */
+let opConsentMode = 'named';
+let opPhotoUrls = { before: null, after: null };
+
+async function opHandlePhoto(type, input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+
+  // Show uploading state
+  const status  = document.getElementById('op' + type.charAt(0).toUpperCase() + type.slice(1) + 'Status');
+  const preview = document.getElementById('op' + type.charAt(0).toUpperCase() + type.slice(1) + 'Preview');
+  const icon    = document.getElementById('op' + type.charAt(0).toUpperCase() + type.slice(1) + 'Icon');
+  status.textContent = 'Uploading…';
+  status.classList.add('show');
+
+  // Generate a temp entry ID for the upload path (reused at submit)
+  if (!window._opTempId) window._opTempId = 'woe_' + Date.now() + '_op';
+
+  const formData = new FormData();
+  formData.append(type, file);
+  formData.append('entry_id', window._opTempId);
+
+  try {
+    const res  = await fetch('/wall/upload.php', { method: 'POST', body: formData });
+    const data = await res.json();
+    if (data[type + '_url']) {
+      opPhotoUrls[type] = data[type + '_url'];
+      preview.src = data[type + '_url'];
+      preview.classList.add('show');
+      icon.style.display = 'none';
+      status.textContent = '✓ Uploaded';
+      setTimeout(() => status.classList.remove('show'), 2000);
+    } else {
+      status.textContent = 'Upload failed';
+    }
+  } catch (e) {
+    status.textContent = 'Network error';
+    console.error('Op photo upload error:', e);
+  }
+}
+
+function openOpCapture() {
+  // Default date to today only if not already set
+  const dateField = document.getElementById('op-date');
+  if (!dateField.value) {
+    const d = new Date();
+    dateField.value =
+      `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+  document.getElementById('opCaptureOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeOpCapture() {
+  document.getElementById('opCaptureOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function setOpConsent(btn) {
+  document.querySelectorAll('.op-consent-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  opConsentMode = btn.dataset.consent;
+}
+
+async function submitOpCapture() {
+  const quote = document.getElementById('op-quote').value.trim();
+  const blade = document.getElementById('op-blade').value.trim();
+  const consentConfirmed = document.getElementById('op-consent-confirm').checked;
+
+  if (!quote)            { document.getElementById('op-quote').focus(); return; }
+  if (!consentConfirmed) { document.getElementById('op-consent-confirm').focus(); return; }
+
+  const btn = document.getElementById('opSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sealing…';
+
+  const nameRaw  = document.getElementById('op-name').value.trim();
+  const dateRaw  = document.getElementById('op-date').value || (() => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  })();
+  const segment  = document.getElementById('op-segment').value || 'Homeowner';
+  const sourceRef = document.getElementById('op-source-ref').value.trim();
+  const opNotes   = document.getElementById('op-notes').value.trim();
+  const isPublic  = document.getElementById('op-public').value === 'true';
+  const featured  = document.getElementById('op-featured').value === 'true' ? true : false;
+
+  const displayName = opConsentMode === 'named'      ? (nameRaw || 'Customer')
+                    : opConsentMode === 'anonymous'  ? 'Anonymous'
+                    : 'Internal Only';
+
+  // Use pre-assigned temp ID if photos were uploaded, otherwise generate fresh
+  const entryId = window._opTempId || ('woe_' + Date.now() + '_op');
+  const sealedBy = document.getElementById('op-sealed-by').value.trim() || 'BiMKA™';
+
+  const entry = {
+    id:       entryId,
+    name:     displayName,
+    segment,
+    blade:    blade || 'Blade',
+    quote,
+    date:     dateRaw,
+    notes:    [
+                'OPERATOR-CAPTURED',
+                sourceRef ? `SOURCE: ${sourceRef}` : null,
+                opNotes   ? `NOTES: ${opNotes}`   : null
+              ].filter(Boolean).join(' · '),
+    featured: featured === true,
+    isPublic,
+    before_url: opPhotoUrls.before || null,
+    after_url:  opPhotoUrls.after  || null,
+    source:   'operator-captured',
+    sealed_by: sealedBy,
+    consent_confirmed: true
+  };
+
+  try {
+    const res = await fetch('/wall/submit.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(entry)
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeOpCapture();
+      // Reset form
+      ['op-name','op-blade','op-quote','op-source-ref','op-notes'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('op-sealed-by').value = 'BiMKA™';
+      // Reset photos
+      opPhotoUrls = { before: null, after: null };
+      window._opTempId = null;
+      ['Before','After'].forEach(t => {
+        document.getElementById('op' + t + 'Preview').classList.remove('show');
+        document.getElementById('op' + t + 'Icon').style.display = '';
+        document.getElementById('op' + t + 'Status').classList.remove('show');
+      });
+      document.getElementById('op-segment').value = '';
+      document.getElementById('op-public').value = 'true';
+      document.getElementById('op-featured').value = 'false';
+      document.getElementById('op-consent-confirm').checked = false;
+      opConsentMode = 'named';
+      document.querySelectorAll('.op-consent-btn').forEach((b,i) => b.classList.toggle('selected', i===0));
+      // Reload wall
+      load();
+    } else {
+      alert('Submission failed — check console.');
+    }
+  } catch(e) {
+    console.error('Op capture error:', e);
+    alert('Network error — check connection.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'SEAL THIS STORY 🔱';
+  }
+}
+</script>
+
+<!-- ══ OPERATOR CAPTURE MODAL ══ -->
+<div class="op-capture-overlay" id="opCaptureOverlay">
+  <div class="op-capture-modal">
+    <button class="op-capture-close" onclick="closeOpCapture()">✕</button>
+    <h3>Capture This Story</h3>
+    <p class="op-sub">operator-captured · internal only until published</p>
+
+    <div class="op-field-group">
+
+      <!-- Name + Date row -->
+      <div class="op-two-col">
+        <div>
+          <label class="op-field-label">Customer Name <span>first + last initial</span></label>
+          <input class="op-input" id="op-name" type="text" placeholder="Anna M.">
+        </div>
+        <div>
+          <label class="op-field-label">Date of Service</label>
+          <input class="op-input" id="op-date" type="date">
+        </div>
+      </div>
+
+      <!-- Blade -->
+      <div>
+        <label class="op-field-label">What Was Sharpened</label>
+        <input class="op-input" id="op-blade" type="text" placeholder="Pruning shears, straight razor, chef's knife…">
+      </div>
+
+      <!-- Segment -->
+      <div>
+        <label class="op-field-label">REAL™ Segment</label>
+        <select class="op-select" id="op-segment">
+          <option value="">— Select —</option>
+          <option value="Homeowner">The HomeLiFE™</option>
+          <option value="Restaurant">The Craft</option>
+          <option value="Barber">The Ritual</option>
+          <option value="Landscaper">The Field</option>
+          <option value="Hobbyist">The Passion</option>
+          <option value="Trade">The Account</option>
+        </select>
+      </div>
+
+      <!-- Their words -->
+      <div>
+        <label class="op-field-label">Their Words <span>verbatim — what they said or posted</span></label>
+        <textarea class="op-textarea" id="op-quote" placeholder="Exactly what they said — in a text, post, verbal, DM…"></textarea>
+      </div>
+
+      <!-- Ops Notes (internal only) -->
+      <div>
+        <label class="op-field-label">Ops Notes <span>never public · sharpening detail, edge condition, method</span></label>
+        <textarea class="op-textarea" id="op-notes" placeholder="e.g. Rolled edge · 2x42 80→220 · Work Sharp fine · paper test clean"></textarea>
+      </div>
+
+      <!-- Source reference (internal only) -->
+      <div>
+        <label class="op-field-label">Source Reference <span>never public · your audit trail</span></label>
+        <input class="op-input" id="op-source-ref" type="text" placeholder="Nextdoor · Anna M. · Apr 2, 2026  /  Verbal at pop-up">
+      </div>
+
+      <!-- Before / After photos -->
+      <div>
+        <label class="op-field-label">Before / After <span>optional — uploads to Wall storage</span></label>
+        <div class="op-photo-row">
+          <div class="op-photo-zone before" id="opBeforeZone">
+            <input type="file" accept="image/*" onchange="opHandlePhoto('before', this)">
+            <img class="op-photo-preview" id="opBeforePreview" src="" alt="">
+            <div class="op-photo-icon" id="opBeforeIcon">📷</div>
+            <span class="op-photo-label">Before</span>
+            <span class="op-photo-status" id="opBeforeStatus">Uploading…</span>
+          </div>
+          <div class="op-photo-zone after" id="opAfterZone">
+            <input type="file" accept="image/*" onchange="opHandlePhoto('after', this)">
+            <img class="op-photo-preview" id="opAfterPreview" src="" alt="">
+            <div class="op-photo-icon" id="opAfterIcon">✨</div>
+            <span class="op-photo-label">After</span>
+            <span class="op-photo-status" id="opAfterStatus">Uploading…</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Operator ID -->
+      <div>
+        <label class="op-field-label">Sealed By <span>operator identity · internal only</span></label>
+        <input class="op-input" id="op-sealed-by" type="text" value="BiMKA™" placeholder="Operator name">
+      </div>
+
+      <!-- Consent mode -->
+      <div>
+        <label class="op-field-label">Consent Mode</label>
+        <div class="op-consent-row" id="opConsentRow">
+          <button type="button" class="op-consent-btn selected" data-consent="named"     onclick="setOpConsent(this)">Named</button>
+          <button type="button" class="op-consent-btn"          data-consent="anonymous" onclick="setOpConsent(this)">Anonymous</button>
+          <button type="button" class="op-consent-btn"          data-consent="none"      onclick="setOpConsent(this)">Internal Only</button>
+        </div>
+      </div>
+
+      <!-- Public toggle -->
+      <div class="op-two-col">
+        <div>
+          <label class="op-field-label">Publish Now?</label>
+          <select class="op-select" id="op-public">
+            <option value="true">Yes — publish to Wall</option>
+            <option value="false">No — stage for review</option>
+          </select>
+        </div>
+        <div>
+          <label class="op-field-label">Featured?</label>
+          <select class="op-select" id="op-featured">
+            <option value="false">No</option>
+            <option value="true">Yes — pole position</option>
+          </select>
+        </div>
+      </div>
+
+    </div><!-- /op-field-group -->
+
+    <!-- Consent acknowledgment -->
+    <div class="op-checkbox-row">
+      <input type="checkbox" id="op-consent-confirm">
+      <label for="op-consent-confirm">
+        <strong>Consent confirmed.</strong> Customer gave permission — verbal, text, or public post. This entry is attributed as operator-captured in internal records.
+      </label>
+    </div>
+
+    <button class="op-submit-btn" id="opSubmitBtn" onclick="submitOpCapture()">
+      SEAL THIS STORY 🔱
+    </button>
+    <p class="op-source-note">source: operator-captured · visible in internal feed</p>
+
+  </div>
+</div>
+</body>
+</html>
