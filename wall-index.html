@@ -353,6 +353,7 @@
     border-radius: 2px;
   }
   .tag.segment { background: rgba(60,36,105,0.1); color: var(--purple); }
+  .tag.identity { background: rgba(255,85,0,0.08); color: var(--orange-dim); border: 1px solid rgba(255,85,0,0.2); }
   .tag.blade { background: rgba(255,85,0,0.1); color: var(--orange-dim); }
   .tag.featured { background: var(--orange); color: white; }
   .card-quote {
@@ -1122,11 +1123,11 @@
 <div class="filter-bar">
   <button class="filter-btn active" data-filter="all" onclick="applyFilter('all', this)">Every LiFE™</button>
   <button class="filter-btn" data-filter="Homeowner" onclick="applyFilter('Homeowner', this)">The HomeLiFE™</button>
-  <button class="filter-btn" data-filter="Restaurant" onclick="applyFilter('Restaurant', this)">The Craft</button>
+  <button class="filter-btn" data-filter="Chef" onclick="applyFilter('Chef', this)">The Passion</button>
   <button class="filter-btn" data-filter="Barber" onclick="applyFilter('Barber', this)">The Ritual</button>
+  <button class="filter-btn" data-filter="Restaurant" onclick="applyFilter('Restaurant', this)">The Account</button>
   <button class="filter-btn" data-filter="Landscaper" onclick="applyFilter('Landscaper', this)">The Field</button>
-  <button class="filter-btn" data-filter="Hobbyist" onclick="applyFilter('Hobbyist', this)">The Passion</button>
-  <button class="filter-btn" data-filter="Trade" onclick="applyFilter('Trade', this)">The Account</button>
+  <button class="filter-btn" data-filter="Hobbyist" onclick="applyFilter('Hobbyist', this)">The Craft</button>
 </div>
 
 <!-- WALL GRID -->
@@ -1203,12 +1204,16 @@
         <div class="form-group">
           <label class="form-label">Segment</label>
           <select class="form-select" id="fSegment">
-            <option value="Homeowner">HomeLiFE™</option>
-            <option value="Restaurant">The Craft</option>
-            <option value="Barber">The Ritual</option>
-            <option value="Landscaper">The Field</option>
-            <option value="Hobbyist">The Passion</option>
-            <option value="Trade">The Account</option>
+            <option value="Homeowner">Homeowner</option>
+            <option value="Chef">Home Cook / Chef</option>
+            <option value="Barber">Barber / Stylist / Groomer</option>
+            <option value="Restaurant">Restaurant / Food Service</option>
+            <option value="Landscaper">Landscaper / Grounds</option>
+            <option value="Outdoorsman">Outdoorsman / Bushcrafter</option>
+            <option value="Maker">Woodworker / Maker</option>
+            <option value="Hunter">Hunter / Angler</option>
+            <option value="Trade">Tradesperson</option>
+            <option value="Collector">Collector / Enthusiast</option>
           </select>
         </div>
       </div>
@@ -1427,11 +1432,20 @@ function filterTable(segment, btn) {
 }
 
 function renderWall() {
+  const FILTER_MAP = {
+    'Homeowner':  ['Homeowner'],
+    'Chef':       ['Chef'],
+    'Barber':     ['Barber'],
+    'Restaurant': ['Restaurant','Trade'],
+    'Landscaper': ['Landscaper','Outdoorsman'],
+    'Hobbyist':   ['Maker','Hunter','Collector']
+  };
   const grid = document.getElementById('wallGrid');
   let filtered = entries.filter(e => {
     if (!internalMode && !e.isPublic) return false;
-    if (currentFilter !== 'all' && e.segment !== currentFilter) return false;
-    return true;
+    if (currentFilter === 'all') return true;
+    const keys = FILTER_MAP[currentFilter] || [currentFilter];
+    return keys.includes(e.segment);
   });
   // Featured first
   filtered.sort((a,b) => (b.featured?1:0)-(a.featured?1:0));
@@ -1463,6 +1477,22 @@ function cardHTML(e) {
     ? `<button class="delete-btn" onclick="deleteEntry('${e.id}')" title="Delete">✕</button>`
     : '';
   const featuredTag = e.featured ? '<span class="tag featured">Featured</span>' : '';
+  const SEGMENT_MAP = {
+    'Homeowner':   { real: 'The HomeLiFEr™',  identity: null },
+    'Chef':        { real: 'The Passion',      identity: 'CHEF' },
+    'Barber':      { real: 'The Ritual',       identity: 'BARBER' },
+    'Restaurant':  { real: 'The Account',      identity: 'RESTAURATEUR' },
+    'Landscaper':  { real: 'The Field',        identity: 'LANDSCAPER' },
+    'Outdoorsman': { real: 'The Field',        identity: 'OUTDOORSMAN' },
+    'Maker':       { real: 'The Craft',        identity: 'MAKER' },
+    'Hunter':      { real: 'The Craft',        identity: 'HUNTER' },
+    'Trade':       { real: 'The Account',      identity: 'TRADE PRO' },
+    'Collector':   { real: 'The Craft',        identity: 'COLLECTOR' }
+  };
+  const seg = SEGMENT_MAP[e.segment] || { real: e.segment, identity: null };
+  const identityTag = seg.identity
+    ? `<span class="tag identity">${seg.identity}</span>`
+    : '';
   const dateStr = e.date ? new Date(e.date+"T12:00:00").toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
 
   return `
@@ -1475,7 +1505,8 @@ function cardHTML(e) {
     <div class="card-body">
       <div class="card-meta">
         ${featuredTag}
-        <span class="tag segment">${e.segment}</span>
+        <span class="tag segment">${seg.real}</span>
+        ${identityTag}
         <span class="tag blade">${e.blade}</span>
       </div>
       <p class="card-quote">${e.quote}</p>
@@ -1866,12 +1897,16 @@ async function submitOpCapture() {
         <label class="op-field-label">REAL™ Segment</label>
         <select class="op-select" id="op-segment">
           <option value="">— Select —</option>
-          <option value="Homeowner">The HomeLiFE™</option>
-          <option value="Restaurant">The Craft</option>
-          <option value="Barber">The Ritual</option>
-          <option value="Landscaper">The Field</option>
-          <option value="Hobbyist">The Passion</option>
-          <option value="Trade">The Account</option>
+          <option value="Homeowner">Homeowner</option>
+          <option value="Chef">Home Cook / Chef</option>
+          <option value="Barber">Barber / Stylist / Groomer</option>
+          <option value="Restaurant">Restaurant / Food Service</option>
+          <option value="Landscaper">Landscaper / Grounds</option>
+          <option value="Outdoorsman">Outdoorsman / Bushcrafter</option>
+          <option value="Maker">Woodworker / Maker</option>
+          <option value="Hunter">Hunter / Angler</option>
+          <option value="Trade">Tradesperson</option>
+          <option value="Collector">Collector / Enthusiast</option>
         </select>
       </div>
 
